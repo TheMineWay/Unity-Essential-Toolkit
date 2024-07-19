@@ -6,11 +6,11 @@ namespace EssentialToolkit
     [RequireComponent(typeof(TextMeshProUGUI))]
     public class TextObject : MonoBehaviour
     {
-        private TextMeshPro textMeshPro;
+        private TextMeshProUGUI textMeshPro;
 
         private void Awake()
         {
-            textMeshPro = GetComponent<TextMeshPro>();
+            textMeshPro = GetComponent<TextMeshProUGUI>();
         }
 
         #region Text access

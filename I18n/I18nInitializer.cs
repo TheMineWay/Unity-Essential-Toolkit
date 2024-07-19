@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Newtonsoft.Json.Linq;
 
 namespace EssentialToolkit.I18n
 {
@@ -34,6 +35,15 @@ namespace EssentialToolkit.I18n
         [SerializeField]
         public TranslationSets translation;
         public TextAsset languageFile;
+
+        #region Parsing
+
+        public JObject ParseFile()
+        {
+            return JObject.Parse(languageFile.text);
+        }
+
+        #endregion
     }
 
     [Serializable]
@@ -43,14 +53,5 @@ namespace EssentialToolkit.I18n
 
         [SerializeField]
         public TranslationGroup[] translations;
-
-        #region Parsing
-
-        public object ParseFile() { 
-            return null; // <- TODO: implement JSON parsing logic
-        }
-
-        #endregion
-
     }
 }

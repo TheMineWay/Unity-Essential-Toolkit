@@ -2,7 +2,7 @@
 /*
  * Here you can add your own languages
  */
-public enum Languages
+public enum Language
 {
     en_US
 }

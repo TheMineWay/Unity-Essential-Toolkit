@@ -14,18 +14,23 @@ namespace EssentialToolkit.I18n
 
         private void Awake()
         {
-            I18nService.GetI18nTextSubscriptionsHandler().AddText(this);
-        }
-
-        private void Start()
-        {
             textObject = GetComponent<TextObject>();
+            I18nService.GetI18nTextSubscriptionsHandler().AddText(this);
         }
 
         #region Key access
 
         public void SetKey(string key, bool update = true) => this.key = key;
         public string GetKey() => key;
+
+        #endregion
+
+        #region Translation
+        
+        public void LoadKeyText()
+        {
+
+        }
 
         #endregion
     }

@@ -7,5 +7,9 @@ namespace EssentialToolkit.I18n
         private List<I18nText> _i18nTexts = new();
 
         public void AddText(I18nText text) => _i18nTexts.Add(text);
+
+        public void UpdateStates() {
+            foreach (var text in _i18nTexts) text.LoadKeyText();
+        }
     }
 }

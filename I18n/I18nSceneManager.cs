@@ -1,12 +1,8 @@
-using Newtonsoft.Json.Linq;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 namespace EssentialToolkit.I18n
 {
-    [RequireComponent(typeof(I18nManager))]
     public class I18nSceneManager : MonoBehaviour
     {
         #region Self instance
@@ -29,6 +25,20 @@ namespace EssentialToolkit.I18n
         public void Initialize()
         {
             I18nService.LoadTranslations(_sceneSets);
+        }
+
+        #endregion
+
+        #region Managers
+
+        public void SetLanguage(Language language)
+        {
+            I18nService.SetLanguage(language);
+        }
+
+        public void SetLanguage(int languageIndex)
+        {
+            SetLanguage((Language)languageIndex);
         }
 
         #endregion

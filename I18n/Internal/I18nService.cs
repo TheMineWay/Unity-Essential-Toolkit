@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-using System.IO;
 
 namespace EssentialToolkit.I18n
 {
@@ -12,7 +11,13 @@ namespace EssentialToolkit.I18n
         #region Language state
 
         private static Language _language;
-        public static void SetLanguage(Language language) => _language = language;
+        public static void SetLanguage(Language language) {
+            _language = language;
+
+            ChangeInMemoryTranslationsLanguage();
+
+            i18nTextSubscriptionsHandler.UpdateStates();
+        }
         public static Language GetLanguage() => _language;
 
         public static LanguageAsset GetLanguageAsset(Language language)
@@ -95,6 +100,14 @@ namespace EssentialToolkit.I18n
                     inMemoryTranslations.Remove(translation);
                 }
             }
+        }
+
+        private static void ChangeInMemoryTranslationsLanguage()
+        {
+            var loadedSets = inMemoryTranslations.Keys.ToArray();
+
+            CleanupInMemoryTranslations();
+            LoadNecessaryTranslations(loadedSets);
         }
 
         #endregion

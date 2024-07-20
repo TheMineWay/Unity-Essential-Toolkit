@@ -35,11 +35,13 @@ namespace EssentialToolkit.Storage
         // Write
         public void Write(string key, string value) => _storageConnector.Write(GenerateKey(key), value);
         public void Write(string key, int value) => _storageConnector.Write(GenerateKey(key), value);
+        public void Write(string key, float value) => _storageConnector.Write(GenerateKey(key), value);
         public void Write(string key, bool value) => _storageConnector.Write(GenerateKey(key), value);
 
         // Read
         public string ReadString(string key) => _storageConnector.ReadString(GenerateKey(key));
         public int ReadInt(string key) => _storageConnector.ReadInt(GenerateKey(key));
+        public float ReadFloat(string key) => _storageConnector.ReadFloat(GenerateKey(key));
         public bool ReadBool(string key) => _storageConnector.ReadBool(GenerateKey(key));
 
         #endregion

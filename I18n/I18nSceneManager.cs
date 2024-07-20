@@ -61,6 +61,7 @@ namespace EssentialToolkit.I18n
 
         private void OnDestroy()
         {
+            I18nService.GetI18nTextSubscriptionsHandler().Clear();
             instance = null;
         }
     }

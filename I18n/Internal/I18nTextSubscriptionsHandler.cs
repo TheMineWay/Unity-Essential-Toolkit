@@ -11,5 +11,7 @@ namespace EssentialToolkit.I18n
         public void UpdateStates() {
             foreach (var text in _i18nTexts) text.LoadKeyText();
         }
+
+        public void Clear() => _i18nTexts.Clear();
     }
 }

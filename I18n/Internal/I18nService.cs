@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 
 namespace EssentialToolkit.I18n
 {
@@ -114,7 +115,7 @@ namespace EssentialToolkit.I18n
 
         #region Translation utils
 
-        public static string Translate(string key, TranslationSets translationSet)
+        public static string Translate(string key, TranslationSets translationSet, Dictionary<string, string> replacements = null)
         {
             string[] keys = key.Split('.');
             JToken token = inMemoryTranslations[translationSet];
@@ -126,11 +127,31 @@ namespace EssentialToolkit.I18n
                 token = token[k];
                 if (token == null)
                 {
-                    return null;
+                    return key;
                 }
             }
 
-            return token.ToString();
+            return ReplaceTranslationPlaceholders(token.ToString(), replacements ?? new());
+        }
+
+        public static string ReplaceTranslationPlaceholders(string input, Dictionary<string, string> replacements)
+        {
+            // Escaping backslashes before placeholders
+            string pattern = @"\\(\{[^\}]+\})";
+            string escapedInput = Regex.Replace(input, pattern, m => "\\" + m.Groups[1].Value);
+
+            // Replacing placeholders with dictionary values
+            foreach (var pair in replacements)
+            {
+                string placeholder = "{" + pair.Key + "}";
+                escapedInput = escapedInput.Replace(placeholder, pair.Value);
+            }
+
+            // Unescaping the escaped placeholders
+            escapedInput = escapedInput.Replace(@"\\{", "{");
+            escapedInput = escapedInput.Replace(@"\\}", "}");
+
+            return escapedInput;
         }
 
         #endregion

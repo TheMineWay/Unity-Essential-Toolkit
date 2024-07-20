@@ -1,5 +1,6 @@
+using System;
 using System.Collections;
-using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace EssentialToolkit.I18n
@@ -16,10 +17,17 @@ namespace EssentialToolkit.I18n
         [SerializeField]
         private TranslationSets translationSet;
 
+        // Replacements
+        [Header("Initial replacement values")]
+        [SerializeField]
+        private I18nTextReplacementPair[] initialReplacements;
+
         private void Awake()
         {
             textObject = GetComponent<TextObject>();
             I18nService.GetI18nTextSubscriptionsHandler().AddText(this);
+
+            LoadInitialReplacements();
         }
 
         private IEnumerator Start()
@@ -41,9 +49,52 @@ namespace EssentialToolkit.I18n
         
         public void LoadKeyText()
         {
-            textObject.SetText(I18nService.Translate(key, translationSet));
+            textObject.SetText(I18nService.Translate(key, translationSet, _replacements));
         }
 
         #endregion
+
+        #region Replacements
+
+        private Dictionary<string, string> _replacements = new();
+        private void OnReplacementsUpdate()
+        {
+            LoadKeyText();
+        }
+
+        public void SetReplacement(string key, string value, bool invokeUpdatedEvent = true)
+        {
+            _replacements[key] = value;
+
+            if (invokeUpdatedEvent) OnReplacementsUpdate();
+        }
+
+        public void RemoveReplacement(string key, bool invokeUpdatedEvent = true)
+        {
+            if (!_replacements.ContainsKey(key)) return;
+
+            _replacements.Remove(key);
+            if (invokeUpdatedEvent) OnReplacementsUpdate();
+        }
+
+        /**
+         * Only called on startup
+         */
+        private void LoadInitialReplacements()
+        {
+            foreach (var replacement in initialReplacements)
+            {
+                _replacements[replacement.key] = replacement.value;
+            }
+        }
+
+        #endregion
+    }
+
+    [Serializable]
+    class I18nTextReplacementPair
+    {
+        public string key;
+        public string value;
     }
 }

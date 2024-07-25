@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
+using EssentialToolkit.Core;
 
 namespace EssentialToolkit.I18n
 {
-    public class I18nInitializer : MonoBehaviour
+    public class I18nInitializer : AInitializer
     {
         /**
          * Language assets saved in memory. This value needs to be initialized before using any I18n utility,
@@ -16,15 +17,7 @@ namespace EssentialToolkit.I18n
         [SerializeField]
         private LanguageAsset[] languages;
 
-        [SerializeField]
-        private bool loadOnStartup = true;
-
-        private void Awake()
-        {
-            if (loadOnStartup) Initialize();
-        }
-
-        public void Initialize() {
+        public override void Initialize() {
             loadedLanguageAssets = languages;
         }
     }

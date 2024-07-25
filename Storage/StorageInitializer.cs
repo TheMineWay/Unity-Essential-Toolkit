@@ -1,24 +1,16 @@
+using EssentialToolkit.Core;
 using System;
 using UnityEngine;
 
 namespace EssentialToolkit.Storage
 {
-    public class StorageInitializer : MonoBehaviour
+    public class StorageInitializer : AInitializer
     {
-        [Header("Initialize on awake")]
-        [SerializeField]
-        private bool _autoInitialize = true;
-
         [Header("Storage instances")]
         [SerializeField]
         private StorageItem[] _storageItems;
 
-        private void Awake()
-        {
-            if (_autoInitialize) Initialize();
-        }
-
-        public void Initialize()
+        public override void Initialize()
         {
             StorageService.ClearServices();
 

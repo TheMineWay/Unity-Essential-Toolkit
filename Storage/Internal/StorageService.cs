@@ -5,9 +5,7 @@ namespace EssentialToolkit.Storage
 {
     public class StorageService
     {
-        public StorageService(string slot = "default", IStorageConnector storageConnector = null){
-            _currentSlot = slot;
-
+        public StorageService(IStorageConnector storageConnector = null){
             if (storageConnector != null) _storageConnector = storageConnector;
         }
 
@@ -48,13 +46,7 @@ namespace EssentialToolkit.Storage
 
         #region Utils
 
-        private string GenerateKey(string key) => $"{_currentSlot}::${key}";
-
-        #endregion
-
-        #region Slots
-
-        private string _currentSlot;
+        private string GenerateKey(string key) => $"{StorageInitializer.GetCurrentSlot()}::${key}";
 
         #endregion
     }

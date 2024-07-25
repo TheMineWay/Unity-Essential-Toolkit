@@ -1,9 +1,14 @@
+using UnityEngine;
+
 namespace EssentialToolkit.Core
 {
     public class DeviceService
     {
-        public static Platform platform {
-            get {
+        #region Platform
+        public static Platform platform
+        {
+            get
+            {
 #if UNITY_ANDROID || UNITY_IOS
                 return Platform.ANDROID;   
 #endif
@@ -13,6 +18,14 @@ namespace EssentialToolkit.Core
                 return Platform.DESKTOP;
             }
         }
+
+        #endregion
+        #region Screen
+
+        public static Vector2 GetScreenResolution() => new Vector2(Screen.width, Screen.height);
+        public static Display[] GetAllConnectedScreens() => Display.displays;
+
+        #endregion
     }
 
     public enum Platform

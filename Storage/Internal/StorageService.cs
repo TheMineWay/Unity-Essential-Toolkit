@@ -53,6 +53,9 @@ namespace EssentialToolkit.Storage
                 return value;
             } catch (System.Exception e)
             {
+                UnityEngine.Debug.LogError("Error while reading " + key);
+                UnityEngine.Debug.LogException(e);
+
                 // Cleaning on error removes the data from the stored data when an error occurs.
                 // This avoids corrupt data from persisting
                 if (clearOnError) _storageConnector.Clear(key);

@@ -2,3 +2,4 @@ Dependencies for Achievements
 
 - Core
 - Storage
+- I18n

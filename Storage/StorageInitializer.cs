@@ -6,6 +6,10 @@ namespace EssentialToolkit.Storage
 {
     public class StorageInitializer : AInitializer
     {
+        private static bool initialized = false;
+        public static bool IsInitialized() => initialized;
+        public static bool SetInitialization(bool state = true) => initialized = state;
+
         [Header("Storage instances")]
         [SerializeField]
         private StorageItem[] _storageItems;
@@ -19,6 +23,8 @@ namespace EssentialToolkit.Storage
                 var service = new StorageService(slot: storageItem.slot, storageConnector: storageItem.GetConnector());
                 StorageService.AddService(storageItem.name, service);
             }
+
+            SetInitialization(true);
         }
     }
 

@@ -4,12 +4,22 @@ using UnityEngine;
 
 namespace EssentialToolkit.Storage
 {
+    public delegate void OnSlotChanged();
+
     public class StorageInitializer : AInitializer
     {
         #region Slots
 
+        // Invoken on slot value change
+        public static OnSlotChanged onSlotChanged;
+
         private static string currentSlot = "default";
-        public static void SetCurrentSlot(string slot) => currentSlot = slot;
+        public static void SetCurrentSlot(string slot) {
+            if (currentSlot == slot) return;
+
+            onSlotChanged.Invoke();
+            currentSlot = slot;
+        }
         public static string GetCurrentSlot() => currentSlot;
 
         #endregion

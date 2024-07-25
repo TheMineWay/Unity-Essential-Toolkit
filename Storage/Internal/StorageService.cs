@@ -35,12 +35,30 @@ namespace EssentialToolkit.Storage
         public void Write(string key, int value) => _storageConnector.Write(GenerateKey(key), value);
         public void Write(string key, float value) => _storageConnector.Write(GenerateKey(key), value);
         public void Write(string key, bool value) => _storageConnector.Write(GenerateKey(key), value);
+        public void WriteObject<T>(string key, T value) where T : class => _storageConnector.WriteObject(GenerateKey(key), value);
 
         // Read
         public string ReadString(string key) => _storageConnector.ReadString(GenerateKey(key));
         public int ReadInt(string key) => _storageConnector.ReadInt(GenerateKey(key));
         public float ReadFloat(string key) => _storageConnector.ReadFloat(GenerateKey(key));
         public bool ReadBool(string key) => _storageConnector.ReadBool(GenerateKey(key));
+
+        public T ReadObject<T>(string key, bool clearOnError = true, T fallback = null) where T : class
+        {
+            try
+            {
+                return _storageConnector.ReadObject<T>(GenerateKey(key));
+            } catch (System.Exception e)
+            {
+                // Cleaning on error removes the data from the stored data when an error occurs.
+                // This avoids corrupt data from persisting
+                if (clearOnError) _storageConnector.Clear(key);
+
+                if (fallback != null) return fallback;
+
+                throw e;
+            }
+        }
 
         #endregion
 

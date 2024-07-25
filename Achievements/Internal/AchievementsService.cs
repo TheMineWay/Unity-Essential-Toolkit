@@ -1,14 +1,19 @@
 using EssentialToolkit.Storage;
+using System;
+using System.Collections.Generic;
 
 namespace EssentialToolkit.Achievements
 {
     public class AchievementsService
     {
 
+        private const string UNLOCKED_ACHIEVEMENTS_STORAGE_KEY = "unlocked-achievements";
+
         #region Instance
 
         private static AchievementsService _instance = null;
 
+        public static AchievementsService GetInstance() => _instance;
         private static void AssignInstance(AchievementsService instance)
         {
 #if UNITY_EDITOR
@@ -45,13 +50,74 @@ namespace EssentialToolkit.Achievements
         private AchievementsService(StorageService storageService)
         {
             this.storageService = storageService;
-        }
 
-        private AchievementsService(string storageServiceName)
-        {
-            storageService = StorageService.GetService(storageServiceName);
+            // Setup slot listener
+            StorageInitializer.onSlotChanged += LoadGivenAchievements;
+
+            // Initial load
+            LoadGivenAchievements();
         }
 
         #endregion
+
+        #region Given achievements
+
+        private List<StoredAchievement> _unlockedAchievements = new();
+
+        private void LoadGivenAchievements()
+        {
+            _unlockedAchievements.Clear();
+
+            // Read given achievements and load them to memory
+            var storedGivenAchievements = storageService.ReadObject(UNLOCKED_ACHIEVEMENTS_STORAGE_KEY, fallback: new StoredAchievement[0]);
+            _unlockedAchievements.AddRange(storedGivenAchievements);
+        }
+
+        #endregion
+
+        #region API
+
+        public void UnlockAchievement(Achievements achievement)
+        {
+            if (HasAchievement(achievement)) return;
+
+            var newAchievement = new StoredAchievement { code = achievement, givenAt = DateTime.Now };
+
+            // Add achievement to in-memory achievements
+            _unlockedAchievements.Add(newAchievement);
+
+            // Write achievements in storage
+            storageService.WriteObject(UNLOCKED_ACHIEVEMENTS_STORAGE_KEY, _unlockedAchievements);
+        }
+
+        public void LockAchievement(Achievements achievement)
+        {
+            var index = _unlockedAchievements.FindIndex((ach) => ach.code == achievement);
+
+            if (index == -1) return;
+
+            // Remove achievement from in-memory achievements
+            _unlockedAchievements.RemoveAt(index);
+
+            // Write achievements in storage
+            storageService.WriteObject(UNLOCKED_ACHIEVEMENTS_STORAGE_KEY, _unlockedAchievements);
+        }
+
+        public bool HasAchievement(Achievements achievement)
+        {
+            foreach (var ach in _unlockedAchievements)
+            {
+                if (ach.code == achievement) return true;
+            }
+            return false;
+        }
+
+        #endregion
+    }
+
+    class StoredAchievement
+    {
+        public Achievements code;
+        public DateTime givenAt;
     }
 }

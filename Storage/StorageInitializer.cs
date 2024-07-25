@@ -17,8 +17,8 @@ namespace EssentialToolkit.Storage
         public static void SetCurrentSlot(string slot) {
             if (currentSlot == slot) return;
 
-            onSlotChanged.Invoke();
             currentSlot = slot;
+            onSlotChanged.Invoke();
         }
         public static string GetCurrentSlot() => currentSlot;
 

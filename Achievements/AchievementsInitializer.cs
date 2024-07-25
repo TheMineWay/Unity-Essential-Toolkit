@@ -11,6 +11,7 @@ namespace EssentialToolkit.Achievements
     {
         // Initialized achievements
         private static readonly Dictionary<Achievements, Achievement> achievements = new();
+        public static Achievement GetAchievement(Achievements achievement) => achievements[achievement];
 
         [SerializeField]
         [Header("Storage service name")]

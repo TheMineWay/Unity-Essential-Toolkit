@@ -4,10 +4,17 @@ using System.Collections.Generic;
 
 namespace EssentialToolkit.Achievements
 {
+    public delegate void OnAchievementUnlocked(Achievements achievements);
     public class AchievementsService
     {
 
         private const string UNLOCKED_ACHIEVEMENTS_STORAGE_KEY = "unlocked-achievements";
+
+        #region Events
+
+        public static OnAchievementUnlocked OnAchievementUnlocked;
+
+        #endregion
 
         #region Instance
 
@@ -89,6 +96,9 @@ namespace EssentialToolkit.Achievements
 
             // Write achievements in storage
             storageService.WriteObject(UNLOCKED_ACHIEVEMENTS_STORAGE_KEY, _unlockedAchievements);
+
+            // Call event
+            OnAchievementUnlocked.Invoke(achievement);
 
             return true;
         }

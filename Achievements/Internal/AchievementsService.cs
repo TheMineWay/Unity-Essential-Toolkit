@@ -77,9 +77,10 @@ namespace EssentialToolkit.Achievements
 
         #region API
 
-        public void UnlockAchievement(Achievements achievement)
+        // If the achievement has been already unlocked it returns false, otherwise it returns true
+        public bool UnlockAchievement(Achievements achievement)
         {
-            if (HasAchievement(achievement)) return;
+            if (HasAchievement(achievement)) return false;
 
             var newAchievement = new StoredAchievement { code = achievement, givenAt = DateTime.Now };
 
@@ -88,6 +89,8 @@ namespace EssentialToolkit.Achievements
 
             // Write achievements in storage
             storageService.WriteObject(UNLOCKED_ACHIEVEMENTS_STORAGE_KEY, _unlockedAchievements);
+
+            return true;
         }
 
         public void LockAchievement(Achievements achievement)

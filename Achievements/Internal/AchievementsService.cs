@@ -116,6 +116,12 @@ namespace EssentialToolkit.Achievements
             storageService.WriteObject(UNLOCKED_ACHIEVEMENTS_STORAGE_KEY, _unlockedAchievements);
         }
 
+        public void ClearAchievements()
+        {
+            _unlockedAchievements.Clear();
+            storageService.Clear(UNLOCKED_ACHIEVEMENTS_STORAGE_KEY);
+        }
+
         public bool HasAchievement(Achievements achievement)
         {
             foreach (var ach in _unlockedAchievements)

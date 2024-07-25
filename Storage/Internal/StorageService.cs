@@ -66,6 +66,10 @@ namespace EssentialToolkit.Storage
             }
         }
 
+        // Clear
+
+        public void Clear(string key) => _storageConnector.Clear(GenerateKey(key));
+
         #endregion
 
         #region Utils

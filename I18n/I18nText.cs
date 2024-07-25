@@ -40,7 +40,11 @@ namespace EssentialToolkit.I18n
 
         #region Key access
 
-        public void SetKey(string key, bool update = true) => this.key = key;
+        public void SetKey(string key, bool update = true) {
+            this.key = key;
+
+            if (update) LoadKeyText();
+        }
         public string GetKey() => key;
 
         #endregion

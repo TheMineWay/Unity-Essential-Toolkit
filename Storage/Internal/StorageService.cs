@@ -47,7 +47,10 @@ namespace EssentialToolkit.Storage
         {
             try
             {
-                return _storageConnector.ReadObject<T>(GenerateKey(key));
+                var value = _storageConnector.ReadObject<T>(GenerateKey(key));
+
+                if (value == null) return fallback;
+                return value;
             } catch (System.Exception e)
             {
                 // Cleaning on error removes the data from the stored data when an error occurs.

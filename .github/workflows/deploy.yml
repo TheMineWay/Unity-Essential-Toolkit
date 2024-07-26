@@ -20,14 +20,14 @@ jobs:
 
     - name: Install dependencies
       run: npm install
-      working-directory: ./_docs
+      working-directory: ./docs
 
     - name: Build Docusaurus site
       run: npm run build
-      working-directory: ./_docs
+      working-directory: ./docs
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./_docs/build
+        publish_dir: ./docs/build

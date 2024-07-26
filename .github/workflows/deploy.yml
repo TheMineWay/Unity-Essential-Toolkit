@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     name: 🔨 Build Docusaurus
+    working-directory: ./docs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,10 +19,8 @@ jobs:
           node-version: 20
 
       - name: 📦 Install dependencies
-        working-directory: ./docs
         run: npm install
       - name: 🔨 Build website
-        working-directory: ./docs
         run: npm run build
 
       - name: ⏫ Upload Build Artifact

@@ -25,7 +25,6 @@ jobs:
         run: npm build
 
       - name: ⏫ Upload Build Artifact
-        working-directory: ./docs
         uses: actions/upload-pages-artifact@v3
         with:
           path: build

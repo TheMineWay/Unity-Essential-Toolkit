@@ -8,7 +8,7 @@ const config: Config = {
   favicon: "img/favicon.ico",
 
   // Set the production url of your site here
-  url: "https://your-docusaurus-site.example.com",
+  url: "https://themineway.github.io/Unity-Essential-Toolkit/",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: "/Unity-Essential-Toolkit/",
@@ -39,7 +39,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            "https://github.com/TheMineWay/Unity-Essential-Toolkit/blob/main",
+            "https://github.com/TheMineWay/Unity-Essential-Toolkit/blob/main/docs/",
         },
         theme: {
           customCss: "./src/css/custom.css",

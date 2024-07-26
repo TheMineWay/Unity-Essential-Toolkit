@@ -1,4 +1,4 @@
-name: Deploy Docusaurus to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -7,30 +7,43 @@ on:
 
 jobs:
   build:
+    name: 🔨 Build Docusaurus
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
 
-    - name: 💚 Setup Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '20'
+      - name: 📦 Install dependencies
+        run: npm install
+      - name: 🔨 Build website
+        run: npm build
 
-    - name: 📦 Install dependencies
-      run: npm install
-      working-directory: ./docs
+      - name: ⏫ Upload Build Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build
 
-    - name: 🔨 Build Docusaurus site
-      run: npm run build
-      working-directory: ./docs
+  deploy:
+    name: 🚀 Deploy to GitHub Pages
+    needs: build
 
-    - name: 🚀 Deploy to GitHub Pages
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        npm install -g gh-pages
-        gh-pages -d ./docs/build
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write # to deploy to Pages
+      id-token: write # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚀 Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

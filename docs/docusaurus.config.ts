@@ -11,14 +11,14 @@ const config: Config = {
   url: "https://your-docusaurus-site.example.com",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: "/",
+  baseUrl: "/Unity-Essential-Toolkit/",
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: "TheMineWay", // Usually your GitHub org/user name.
   projectName: "unity-essential-toolkit", // Usually your repo name.
   trailingSlash: false,
-  
+
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
 

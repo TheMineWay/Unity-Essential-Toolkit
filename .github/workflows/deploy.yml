@@ -13,20 +13,20 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Setup Node.js
+    - name: 💚 Setup Node.js
       uses: actions/setup-node@v2
       with:
         node-version: '20'
 
-    - name: Install dependencies
+    - name: 📦 Install dependencies
       run: npm install
       working-directory: ./docs
 
-    - name: Build Docusaurus site
+    - name: 🔨 Build Docusaurus site
       run: npm run build
       working-directory: ./docs
 
-    - name: Deploy to GitHub Pages
+    - name: 🚀 Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}

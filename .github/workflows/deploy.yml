@@ -18,9 +18,11 @@ jobs:
           node-version: 20
 
       - name: 📦 Install dependencies
-        run: cd ./docs & npm install
+        working-directory: ./docs
+        run: npm install
       - name: 🔨 Build website
-        run: cd ./docs & npm build
+        working-directory: ./docs
+        run: npm run build
 
       - name: ⏫ Upload Build Artifact
         uses: actions/upload-pages-artifact@v3

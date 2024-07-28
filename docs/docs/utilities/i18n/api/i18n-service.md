@@ -114,4 +114,10 @@ The `I18nService` class is responsible for managing internationalization (i18n) 
         <td></td>
         <td>Removes all global replacements.</td>
     </tr>
+    <tr>
+        <td>AppendGlobalReplacements</td>
+        <td></td>
+        <td></td>
+        <td>Appends a dictionary to the current global replacements.</td>
+    </tr>
 </table>

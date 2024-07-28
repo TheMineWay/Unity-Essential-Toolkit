@@ -5,8 +5,10 @@ namespace EssentialToolkit.Storage
 {
     public class StorageService
     {
-        public StorageService(IStorageConnector storageConnector = null){
+        public StorageService(IStorageConnector storageConnector = null, string slot = null) {
             if (storageConnector != null) _storageConnector = storageConnector;
+
+            this.slot = slot ?? "";
         }
 
         #region Self instance
@@ -17,6 +19,7 @@ namespace EssentialToolkit.Storage
         public static void AddService(string serviceName, StorageService service) => _services.Add(serviceName, service);
         public static void RemoveService(string serviceName) => _services.Remove(serviceName);
         public static StorageService GetService(string serviceName) => _services[serviceName];
+        public static StorageService[] GetServices() => _services.Values.ToArray();
         public static string[] GetServiceNames() => _services.Keys.ToArray();
 
         #endregion
@@ -74,7 +77,16 @@ namespace EssentialToolkit.Storage
 
         #region Utils
 
-        private string GenerateKey(string key) => $"{StorageInitializer.GetCurrentSlot()}::${key}";
+        private string GenerateKey(string key) => $"{slot}::${key}";
+
+        #endregion
+
+        #region Slot
+
+        private string slot;
+
+        public void SetSlot(string slot) => this.slot = slot;
+        public string GetSlot() => slot;
 
         #endregion
     }

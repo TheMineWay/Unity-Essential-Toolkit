@@ -14,10 +14,17 @@ namespace EssentialToolkit.Storage
         public static OnSlotChanged onSlotChanged;
 
         private static string currentSlot = "default";
-        public static void SetCurrentSlot(string slot) {
+        public static void SetCurrentSlot(string slot, bool updateStorageInstances = true) {
             if (currentSlot == slot) return;
 
             currentSlot = slot;
+
+            // Update all initialized storage services slots
+            if (updateStorageInstances)
+            {
+                foreach (var service in StorageService.GetServices()) service.SetSlot(slot);
+            }
+
             onSlotChanged.Invoke();
         }
         public static string GetCurrentSlot() => currentSlot;
@@ -39,13 +46,13 @@ namespace EssentialToolkit.Storage
         public override void Initialize()
         {
             // Store default slot name in current slot if present
-            if(_defaultSlot.Trim() != "") SetCurrentSlot(_defaultSlot);
+            if(_defaultSlot.Trim() != "") SetCurrentSlot(_defaultSlot, updateStorageInstances: false);
 
             StorageService.ClearServices();
 
             foreach (var storageItem in _storageItems)
             {
-                var service = new StorageService(storageConnector: storageItem.GetConnector());
+                var service = new StorageService(storageConnector: storageItem.GetConnector(), slot: currentSlot);
                 StorageService.AddService(storageItem.name, service);
             }
 

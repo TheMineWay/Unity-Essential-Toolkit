@@ -3,6 +3,7 @@ using System.Linq;
 
 namespace EssentialToolkit.Storage
 {
+    public delegate void OnSlotChanged();
     public class StorageService
     {
         public StorageService(IStorageConnector storageConnector = null, string slot = null) {
@@ -89,5 +90,27 @@ namespace EssentialToolkit.Storage
         public string GetSlot() => slot;
 
         #endregion
+
+        // - [ CORE UTILS ] ---------
+
+        // Invoken on slot value change
+        public static OnSlotChanged onSlotChanged;
+
+        private static string currentSlot = "default";
+        public static void SetCurrentSlot(string slot, bool updateStorageInstances = true)
+        {
+            if (currentSlot == slot) return;
+
+            currentSlot = slot;
+
+            // Update all initialized storage services slots
+            if (updateStorageInstances)
+            {
+                foreach (var service in GetServices()) service.SetSlot(slot);
+            }
+
+            onSlotChanged.Invoke();
+        }
+        public static string GetCurrentSlot() => currentSlot;
     }
 }

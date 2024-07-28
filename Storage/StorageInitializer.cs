@@ -4,33 +4,8 @@ using UnityEngine;
 
 namespace EssentialToolkit.Storage
 {
-    public delegate void OnSlotChanged();
-
     public class StorageInitializer : AInitializer
     {
-        #region Slots
-
-        // Invoken on slot value change
-        public static OnSlotChanged onSlotChanged;
-
-        private static string currentSlot = "default";
-        public static void SetCurrentSlot(string slot, bool updateStorageInstances = true) {
-            if (currentSlot == slot) return;
-
-            currentSlot = slot;
-
-            // Update all initialized storage services slots
-            if (updateStorageInstances)
-            {
-                foreach (var service in StorageService.GetServices()) service.SetSlot(slot);
-            }
-
-            onSlotChanged.Invoke();
-        }
-        public static string GetCurrentSlot() => currentSlot;
-
-        #endregion
-
         private static bool initialized = false;
         public static bool IsInitialized() => initialized;
         public static bool SetInitialization(bool state = true) => initialized = state;
@@ -46,13 +21,13 @@ namespace EssentialToolkit.Storage
         public override void Initialize()
         {
             // Store default slot name in current slot if present
-            if(_defaultSlot.Trim() != "") SetCurrentSlot(_defaultSlot, updateStorageInstances: false);
+            if(_defaultSlot.Trim() != "") StorageService.SetCurrentSlot(_defaultSlot, updateStorageInstances: false);
 
             StorageService.ClearServices();
 
             foreach (var storageItem in _storageItems)
             {
-                var service = new StorageService(storageConnector: storageItem.GetConnector(), slot: currentSlot);
+                var service = new StorageService(storageConnector: storageItem.GetConnector(), slot: StorageService.GetCurrentSlot());
                 StorageService.AddService(storageItem.name, service);
             }
 

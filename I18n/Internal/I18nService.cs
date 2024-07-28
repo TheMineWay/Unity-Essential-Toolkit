@@ -161,12 +161,14 @@ namespace EssentialToolkit.I18n
 
         public static string ReplaceTranslationPlaceholders(string input, Dictionary<string, string> replacements)
         {
+            var mergedReplacements = MergeWithGlobalReplacements(replacements);
+
             // Escaping backslashes before placeholders
             string pattern = @"\\(\{[^\}]+\})";
             string escapedInput = Regex.Replace(input, pattern, m => "\\" + m.Groups[1].Value);
 
             // Replacing placeholders with dictionary values
-            foreach (var pair in replacements)
+            foreach (var pair in mergedReplacements)
             {
                 string placeholder = "{" + pair.Key + "}";
                 escapedInput = escapedInput.Replace(placeholder, pair.Value);
@@ -177,6 +179,11 @@ namespace EssentialToolkit.I18n
             escapedInput = escapedInput.Replace(@"\\}", "}");
 
             return escapedInput;
+        }
+
+        private static Dictionary<string, string> MergeWithGlobalReplacements(Dictionary<string, string> replacements)
+        {
+            return _globalReplacements.Concat(replacements).ToDictionary(x => x.Key, x => x.Value);
         }
 
         #endregion

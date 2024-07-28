@@ -59,7 +59,7 @@ namespace EssentialToolkit.Achievements
             this.storageService = storageService;
 
             // Setup slot listener
-            StorageInitializer.onSlotChanged += LoadGivenAchievements;
+            StorageService.onSlotChanged += LoadGivenAchievements;
 
             // Initial load
             LoadGivenAchievements();

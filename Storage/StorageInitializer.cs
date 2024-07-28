@@ -4,26 +4,8 @@ using UnityEngine;
 
 namespace EssentialToolkit.Storage
 {
-    public delegate void OnSlotChanged();
-
     public class StorageInitializer : AInitializer
     {
-        #region Slots
-
-        // Invoken on slot value change
-        public static OnSlotChanged onSlotChanged;
-
-        private static string currentSlot = "default";
-        public static void SetCurrentSlot(string slot) {
-            if (currentSlot == slot) return;
-
-            currentSlot = slot;
-            onSlotChanged.Invoke();
-        }
-        public static string GetCurrentSlot() => currentSlot;
-
-        #endregion
-
         private static bool initialized = false;
         public static bool IsInitialized() => initialized;
         public static bool SetInitialization(bool state = true) => initialized = state;
@@ -39,13 +21,13 @@ namespace EssentialToolkit.Storage
         public override void Initialize()
         {
             // Store default slot name in current slot if present
-            if(_defaultSlot.Trim() != "") SetCurrentSlot(_defaultSlot);
+            if(_defaultSlot.Trim() != "") StorageService.SetCurrentSlot(_defaultSlot, updateStorageInstances: false);
 
             StorageService.ClearServices();
 
             foreach (var storageItem in _storageItems)
             {
-                var service = new StorageService(storageConnector: storageItem.GetConnector());
+                var service = new StorageService(storageConnector: storageItem.GetConnector(), slot: StorageService.GetCurrentSlot());
                 StorageService.AddService(storageItem.name, service);
             }
 
@@ -67,6 +49,7 @@ namespace EssentialToolkit.Storage
             switch (storageType)
             {
                 case StorageType.PLAYERPREFS: return new PlayerprefsStorageConnector();
+                case StorageType.IN_MEMORY: return new InMemoryStorageConnector();
             }
 
             throw new Exception($"Storage service not found: {storageType}");
@@ -75,6 +58,7 @@ namespace EssentialToolkit.Storage
 
     enum StorageType
     {
-        PLAYERPREFS
+        PLAYERPREFS,
+        IN_MEMORY
     }
 }

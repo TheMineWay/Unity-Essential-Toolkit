@@ -3,23 +3,14 @@ using System.Linq;
 
 namespace EssentialToolkit.Storage
 {
+    public delegate void OnSlotChanged();
     public class StorageService
     {
-        public StorageService(IStorageConnector storageConnector = null){
+        public StorageService(IStorageConnector storageConnector = null, string slot = null) {
             if (storageConnector != null) _storageConnector = storageConnector;
+
+            this.slot = slot ?? "";
         }
-
-        #region Self instance
-
-        private static Dictionary<string, StorageService> _services = new();
-
-        public static void ClearServices() => _services.Clear();
-        public static void AddService(string serviceName, StorageService service) => _services.Add(serviceName, service);
-        public static void RemoveService(string serviceName) => _services.Remove(serviceName);
-        public static StorageService GetService(string serviceName) => _services[serviceName];
-        public static string[] GetServiceNames() => _services.Keys.ToArray();
-
-        #endregion
 
         #region Connector
 
@@ -74,7 +65,55 @@ namespace EssentialToolkit.Storage
 
         #region Utils
 
-        private string GenerateKey(string key) => $"{StorageInitializer.GetCurrentSlot()}::${key}";
+        private string GenerateKey(string key) => $"{slot}::${key}";
+
+        #endregion
+
+        #region Slot
+
+        private string slot;
+
+        public void SetSlot(string slot) => this.slot = slot;
+        public string GetSlot() => slot;
+
+        #endregion
+
+        // - [ CORE API ] ---------
+
+        #region Slot API
+
+        // Invoken on slot value change
+        public static OnSlotChanged onSlotChanged;
+
+        private static string currentSlot = "default";
+        public static void SetCurrentSlot(string slot, bool updateStorageInstances = true)
+        {
+            if (currentSlot == slot) return;
+
+            currentSlot = slot;
+
+            // Update all initialized storage services slots
+            if (updateStorageInstances)
+            {
+                foreach (var service in GetServices()) service.SetSlot(slot);
+            }
+
+            onSlotChanged.Invoke();
+        }
+        public static string GetCurrentSlot() => currentSlot;
+
+        #endregion
+
+        #region Services management
+
+        private static Dictionary<string, StorageService> _services = new();
+
+        public static void ClearServices() => _services.Clear();
+        public static void AddService(string serviceName, StorageService service) => _services.Add(serviceName, service);
+        public static void RemoveService(string serviceName) => _services.Remove(serviceName);
+        public static StorageService GetService(string serviceName) => _services[serviceName];
+        public static StorageService[] GetServices() => _services.Values.ToArray();
+        public static string[] GetServiceNames() => _services.Keys.ToArray();
 
         #endregion
     }

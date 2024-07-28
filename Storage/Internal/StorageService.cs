@@ -12,19 +12,6 @@ namespace EssentialToolkit.Storage
             this.slot = slot ?? "";
         }
 
-        #region Self instance
-
-        private static Dictionary<string, StorageService> _services = new();
-
-        public static void ClearServices() => _services.Clear();
-        public static void AddService(string serviceName, StorageService service) => _services.Add(serviceName, service);
-        public static void RemoveService(string serviceName) => _services.Remove(serviceName);
-        public static StorageService GetService(string serviceName) => _services[serviceName];
-        public static StorageService[] GetServices() => _services.Values.ToArray();
-        public static string[] GetServiceNames() => _services.Keys.ToArray();
-
-        #endregion
-
         #region Connector
 
         private IStorageConnector _storageConnector = new PlayerprefsStorageConnector();
@@ -91,7 +78,9 @@ namespace EssentialToolkit.Storage
 
         #endregion
 
-        // - [ CORE UTILS ] ---------
+        // - [ CORE API ] ---------
+
+        #region Slot API
 
         // Invoken on slot value change
         public static OnSlotChanged onSlotChanged;
@@ -112,5 +101,20 @@ namespace EssentialToolkit.Storage
             onSlotChanged.Invoke();
         }
         public static string GetCurrentSlot() => currentSlot;
+
+        #endregion
+
+        #region Services management
+
+        private static Dictionary<string, StorageService> _services = new();
+
+        public static void ClearServices() => _services.Clear();
+        public static void AddService(string serviceName, StorageService service) => _services.Add(serviceName, service);
+        public static void RemoveService(string serviceName) => _services.Remove(serviceName);
+        public static StorageService GetService(string serviceName) => _services[serviceName];
+        public static StorageService[] GetServices() => _services.Values.ToArray();
+        public static string[] GetServiceNames() => _services.Keys.ToArray();
+
+        #endregion
     }
 }

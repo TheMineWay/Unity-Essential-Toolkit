@@ -17,7 +17,7 @@ namespace EssentialToolkit.I18n
 
             ChangeInMemoryTranslationsLanguage();
 
-            i18nTextSubscriptionsHandler.UpdateStates();
+            NotifyI18nStateChanges();
         }
         public static Language GetLanguage() => _language;
 
@@ -29,6 +29,31 @@ namespace EssentialToolkit.I18n
 
         #endregion
 
+        #region Global replacements
+
+        private static Dictionary<string, string> _globalReplacements = new();
+
+        public static Dictionary<string, string> GetGlobalReplacements = _globalReplacements;
+        public static void SetGlobalReplacement(string key, string value)
+        {
+            _globalReplacements[key] = value;
+
+            NotifyI18nStateChanges();
+        }
+        public static void RemoveGlobalReplacement(string key)
+        {
+            _globalReplacements.Remove(key);
+
+            NotifyI18nStateChanges();
+        }
+        public static void ClearGlobalReplacements()
+        {
+            _globalReplacements.Clear();
+
+            NotifyI18nStateChanges();
+        }
+
+        #endregion
 
         private static I18nTextSubscriptionsHandler i18nTextSubscriptionsHandler = new();
         public static I18nTextSubscriptionsHandler GetI18nTextSubscriptionsHandler() => i18nTextSubscriptionsHandler;
@@ -152,6 +177,15 @@ namespace EssentialToolkit.I18n
             escapedInput = escapedInput.Replace(@"\\}", "}");
 
             return escapedInput;
+        }
+
+        #endregion
+
+        #region Updates
+
+        private static void NotifyI18nStateChanges()
+        {
+            i18nTextSubscriptionsHandler.UpdateStates();
         }
 
         #endregion

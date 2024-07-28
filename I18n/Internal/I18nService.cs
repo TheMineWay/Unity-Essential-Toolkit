@@ -17,7 +17,7 @@ namespace EssentialToolkit.I18n
 
             ChangeInMemoryTranslationsLanguage();
 
-            i18nTextSubscriptionsHandler.UpdateStates();
+            NotifyI18nStateChanges();
         }
         public static Language GetLanguage() => _language;
 
@@ -29,6 +29,37 @@ namespace EssentialToolkit.I18n
 
         #endregion
 
+        #region Global replacements
+
+        private static Dictionary<string, string> _globalReplacements = new();
+
+        public static Dictionary<string, string> GetGlobalReplacements() => _globalReplacements;
+        public static void AppendGlobalReplacements(Dictionary<string, string> globalReplacements, bool triggerUpdateNotification = true)
+        {
+            _globalReplacements = _globalReplacements.Concat(globalReplacements).ToDictionary(x => x.Key, x => x.Value);
+
+            if (triggerUpdateNotification) NotifyI18nStateChanges();
+        }
+        public static void SetGlobalReplacement(string key, string value, bool triggerUpdateNotification = true)
+        {
+            _globalReplacements[key] = value;
+
+            if (triggerUpdateNotification) NotifyI18nStateChanges();
+        }
+        public static void RemoveGlobalReplacement(string key)
+        {
+            _globalReplacements.Remove(key);
+
+            NotifyI18nStateChanges();
+        }
+        public static void ClearGlobalReplacements()
+        {
+            _globalReplacements.Clear();
+
+            NotifyI18nStateChanges();
+        }
+
+        #endregion
 
         private static I18nTextSubscriptionsHandler i18nTextSubscriptionsHandler = new();
         public static I18nTextSubscriptionsHandler GetI18nTextSubscriptionsHandler() => i18nTextSubscriptionsHandler;
@@ -136,12 +167,14 @@ namespace EssentialToolkit.I18n
 
         public static string ReplaceTranslationPlaceholders(string input, Dictionary<string, string> replacements)
         {
+            var mergedReplacements = MergeWithGlobalReplacements(replacements);
+
             // Escaping backslashes before placeholders
             string pattern = @"\\(\{[^\}]+\})";
             string escapedInput = Regex.Replace(input, pattern, m => "\\" + m.Groups[1].Value);
 
             // Replacing placeholders with dictionary values
-            foreach (var pair in replacements)
+            foreach (var pair in mergedReplacements)
             {
                 string placeholder = "{" + pair.Key + "}";
                 escapedInput = escapedInput.Replace(placeholder, pair.Value);
@@ -152,6 +185,20 @@ namespace EssentialToolkit.I18n
             escapedInput = escapedInput.Replace(@"\\}", "}");
 
             return escapedInput;
+        }
+
+        private static Dictionary<string, string> MergeWithGlobalReplacements(Dictionary<string, string> replacements)
+        {
+            return _globalReplacements.Concat(replacements).ToDictionary(x => x.Key, x => x.Value);
+        }
+
+        #endregion
+
+        #region Updates
+
+        private static void NotifyI18nStateChanges()
+        {
+            i18nTextSubscriptionsHandler.UpdateStates();
         }
 
         #endregion

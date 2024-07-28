@@ -17,7 +17,13 @@ namespace EssentialToolkit.I18n
         [SerializeField]
         private LanguageAsset[] languages;
 
+        [SerializeField]
+        private StringDictionaryBuilder[] _globalReplacements;
+
         public override void Initialize() {
+            // Configure global replacements without updating dependant texts
+            I18nService.AppendGlobalReplacements(ADictionaryBuilder<string>.ToDictionary(_globalReplacements), triggerUpdateNotification: false);
+
             loadedLanguageAssets = languages;
         }
     }

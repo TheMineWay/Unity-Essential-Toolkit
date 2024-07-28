@@ -33,12 +33,18 @@ namespace EssentialToolkit.I18n
 
         private static Dictionary<string, string> _globalReplacements = new();
 
-        public static Dictionary<string, string> GetGlobalReplacements = _globalReplacements;
-        public static void SetGlobalReplacement(string key, string value)
+        public static Dictionary<string, string> GetGlobalReplacements() => _globalReplacements;
+        public static void AppendGlobalReplacements(Dictionary<string, string> globalReplacements, bool triggerUpdateNotification = true)
+        {
+            _globalReplacements = _globalReplacements.Concat(globalReplacements).ToDictionary(x => x.Key, x => x.Value);
+
+            if (triggerUpdateNotification) NotifyI18nStateChanges();
+        }
+        public static void SetGlobalReplacement(string key, string value, bool triggerUpdateNotification = true)
         {
             _globalReplacements[key] = value;
 
-            NotifyI18nStateChanges();
+            if (triggerUpdateNotification) NotifyI18nStateChanges();
         }
         public static void RemoveGlobalReplacement(string key)
         {

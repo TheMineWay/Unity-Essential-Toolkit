@@ -49,6 +49,7 @@ namespace EssentialToolkit.Storage
             switch (storageType)
             {
                 case StorageType.PLAYERPREFS: return new PlayerprefsStorageConnector();
+                case StorageType.IN_MEMORY: return new InMemoryStorageConnector();
             }
 
             throw new Exception($"Storage service not found: {storageType}");
@@ -57,6 +58,7 @@ namespace EssentialToolkit.Storage
 
     enum StorageType
     {
-        PLAYERPREFS
+        PLAYERPREFS,
+        IN_MEMORY
     }
 }

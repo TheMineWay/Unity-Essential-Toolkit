@@ -63,7 +63,10 @@ The `I18nService` class is responsible for managing internationalization (i18n) 
     </tr>
     <tr>
         <td>Translate</td>
-        <td>`string` (path) `TranslationSets` (translation) `Dictionary<string string>` (replacements)</td>
+        <td>
+            - `string`: path.
+            - `TranslationSets`: translation `Dictionary<string string>` (replacements)
+        </td>
         <td>`string`</td>
         <td>
             Given a translation path and a translation set it searches in the translation set for the translation corresponding to the path.
@@ -73,8 +76,42 @@ The `I18nService` class is responsible for managing internationalization (i18n) 
     </tr>
     <tr>
         <td>ReplaceTranslationPlaceholders</td>
-        <td>`string` (translation entry) `Dictionary<string, string>` (replacements)</td>
+        <td>
+            - `string`: translation entry.
+            - `Dictionary<string, string>`: replacements
+        </td>
         <td>`string`</td>
         <td>Given a translated string that can contain replacement variables, it returns it with variables replaced with the values from the dictionary.</td>
+    </tr>
+    <tr>
+        <td>GetGlobalReplacements</td>
+        <td></td>
+        <td>
+            `Dictionary<string, string>`
+        </td>
+        <td>It returns the global replacements dictionary.</td>
+    </tr>
+    <tr>
+        <td>SetGlobalReplacement</td>
+        <td>
+            - `string`: replacement key.
+            - `string`: replacement value.
+        </td>
+        <td></td>
+        <td>Given a replacement key and a value, it adds it to the global replacements.</td>
+    </tr>
+    <tr>
+        <td>RemoveGlobalReplacement</td>
+        <td>
+            - `string`: replacement key.
+        </td>
+        <td></td>
+        <td>Given a replacement key, it removes it.</td>
+    </tr>
+    <tr>
+        <td>ClearGlobalReplacements</td>
+        <td></td>
+        <td></td>
+        <td>Removes all global replacements.</td>
     </tr>
 </table>

@@ -2,6 +2,7 @@ using EssentialToolkit.Core;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace EssentialToolkit.Dialogs
 {
@@ -55,7 +56,12 @@ namespace EssentialToolkit.Dialogs
         private int? currentDialog = null;
         private void SetCurrentDialog(int? currentDialog)
         {
+            if (this.currentDialog == currentDialog) return;
+
             this.currentDialog = currentDialog;
+
+            // Invoke events
+            onDialogChange.Invoke();
 
             // Update UI
             UpdateDialogText();
@@ -75,7 +81,18 @@ namespace EssentialToolkit.Dialogs
          */
         public void SetDialog(int dialogIndex)
         {
-            if (dialogIndex < 0 || dialogIndex > GetLastDialogIndex()) throw new Exception("Dialog index out of dialog entries bounds");
+            if (dialogIndex < 0)
+            {
+                currentDialog = null;
+                return;
+            }
+
+            if (dialogIndex > GetLastDialogIndex())
+            {
+                currentDialog = null;
+                onDialogsEnd.Invoke();
+                return;
+            }
 
             // Update state
             SetCurrentDialog(dialogIndex);
@@ -87,14 +104,14 @@ namespace EssentialToolkit.Dialogs
 
         public void NextDialog(int steps = 1)
         {
-            if (currentDialog == null) SetDialog(steps - 1);
-            else SetDialog((int)currentDialog + steps);
+            var newIndex = 0;
+
+            if (currentDialog == null) newIndex = steps;
+            else newIndex = (int)currentDialog + steps;
+
+            SetDialog(newIndex);
         }
-        public void PrevDialog(int steps = 1)
-        {
-            if (currentDialog == null) SetDialog(steps + 1);
-            else SetDialog((int)currentDialog + steps);
-        }
+        public void PrevDialog(int steps = 1) => NextDialog(steps * -1);
         #endregion
 
         #region Internal API
@@ -109,6 +126,15 @@ namespace EssentialToolkit.Dialogs
 
             dialogTextDisplay.SetText(GetEntry((int)currentDialog).GetText());
         }
+
+        #endregion
+
+        #region Events
+
+        [Header("Called when the dialog changes")]
+        public UnityEvent onDialogChange;
+        [Header("Called when there are no more dialogs left to display")]
+        public UnityEvent onDialogsEnd;
 
         #endregion
     }

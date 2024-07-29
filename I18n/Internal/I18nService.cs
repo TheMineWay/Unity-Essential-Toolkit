@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace EssentialToolkit.I18n
 {
+    public delegate void OnLanguageChange();
     public class I18nService
     {
 
@@ -61,6 +62,7 @@ namespace EssentialToolkit.I18n
 
         #endregion
 
+        public static OnLanguageChange onLanguageChange;
         private static I18nTextSubscriptionsHandler i18nTextSubscriptionsHandler = new();
         public static I18nTextSubscriptionsHandler GetI18nTextSubscriptionsHandler() => i18nTextSubscriptionsHandler;
 
@@ -199,6 +201,7 @@ namespace EssentialToolkit.I18n
         private static void NotifyI18nStateChanges()
         {
             i18nTextSubscriptionsHandler.UpdateStates();
+            onLanguageChange.Invoke();
         }
 
         #endregion

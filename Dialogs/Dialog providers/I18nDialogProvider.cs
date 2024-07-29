@@ -26,6 +26,13 @@ namespace EssentialToolkit.Dialogs
         private void Awake()
         {
             StartCoroutine(Initialize());
+
+            I18nService.onLanguageChange += OnLanguageChange;
+        }
+
+        private void OnDestroy()
+        {
+            I18nService.onLanguageChange -= OnLanguageChange;
         }
 
         private IEnumerator Initialize()
@@ -33,6 +40,14 @@ namespace EssentialToolkit.Dialogs
             // Wait for i18n to be initialized
             yield return new WaitUntil(I18nService.SceneAssetsHaveBeenLoaded);
 
+            LoadDialogs();
+
+            // Provider is ready to be used
+            _isReady = true;
+        }
+
+        private void LoadDialogs()
+        {
             var dialogEntries = new List<DialogEntry>();
 
             foreach (var entry in _entries)
@@ -42,14 +57,22 @@ namespace EssentialToolkit.Dialogs
             }
 
             _dialogEntries = dialogEntries.ToArray();
-
-            // Provider is ready to be used
-            _isReady = true;
         }
 
         #endregion
 
         public DialogEntry[] GetEntries() => _dialogEntries;
+
+        #region Language changes
+
+        private void OnLanguageChange()
+        {
+            LoadDialogs();
+
+            onDialogProviderDataChange.Invoke();
+        }
+
+        #endregion
     }
 
     [Serializable]

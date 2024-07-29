@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace EssentialToolkit.Core
 {
@@ -22,7 +23,13 @@ namespace EssentialToolkit.Core
             onChanneledAudioSettingsChange.Invoke(audioChannel, newVolume);
         }
 
-        public static float GetVolumeByAudioChannel(AudioChannels audioChannel) => _channeledAudioSettings[audioChannel];
+        public static float GetVolumeByAudioChannel(AudioChannels audioChannel) {
+            if (!_channeledAudioSettings.ContainsKey(audioChannel)) return 0;
+
+            return _channeledAudioSettings[audioChannel];
+        }
+
+        public static AudioChannels[] GetAllAudioChannels() => _channeledAudioSettings.Keys.ToArray();
 
         #endregion
     }

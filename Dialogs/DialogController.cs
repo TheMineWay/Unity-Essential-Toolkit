@@ -102,6 +102,10 @@ namespace EssentialToolkit.Dialogs
         public DialogEntry GetEntry(string code) => _dialogProvider.GetEntries()[GetEntryIndex(code)];
         public int GetEntryIndex(string code) => Array.FindIndex(_dialogProvider.GetEntries(), (d) => d.GetCode() == code);
 
+        public void StartDialog(int setp = 0)
+        {
+            SetDialog(setp);
+        }
         public void NextDialog(int steps = 1)
         {
             var newIndex = 0;

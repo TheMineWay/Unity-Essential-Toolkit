@@ -2,21 +2,23 @@
     "i-1": {
         "text": "Hello from example",
         "speaker": "",
-        "images": ""
+        "images": [
+            "image-1"
+        ]
     },
     "i-2": {
         "text": "Second sentence",
         "speaker": "",
-        "images": ""
+        "images": []
     },
     "i-3": {
         "text": "Third sentence",
         "speaker": "",
-        "images": ""
+        "images": []
     },
     "i-4": {
         "text": ":D",
         "speaker": "",
-        "images": ""
+        "images": []
     }
 }

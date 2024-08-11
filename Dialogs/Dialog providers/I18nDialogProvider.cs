@@ -16,6 +16,10 @@ namespace EssentialToolkit.Dialogs
         [SerializeField]
         private I18nDialogEntry[] _entries;
 
+        [SerializeField]
+        [Header("If you provide a dialogs JSON file the inspector 'Entries' will be overriden")]
+        private TextAsset _jsonDialogEntries;
+
         private DialogEntry[] _dialogEntries;
 
         #region Initialization
@@ -37,6 +41,8 @@ namespace EssentialToolkit.Dialogs
 
         private IEnumerator Initialize()
         {
+            LoadJsonEntries();
+
             // Wait for i18n to be initialized
             yield return new WaitUntil(I18nService.SceneAssetsHaveBeenLoaded);
 
@@ -73,11 +79,28 @@ namespace EssentialToolkit.Dialogs
         }
 
         #endregion
+
+        #region Internal API
+
+        private void LoadJsonEntries()
+        {
+            if (!_jsonDialogEntries) return;
+
+            _entries = DialogEntry.ParseDialogEntryFromJSON<I18nDialogEntry>(_jsonDialogEntries.text);
+        }
+
+        #endregion
     }
 
     [Serializable]
     public class I18nDialogEntry : ARegisterDialogEntry
     {
+        public I18nDialogEntry(string key, string code, string speaker, string[] images) {
+            this.key = key;
+            base.code = code;
+            base.images = images;
+            base.speaker = speaker;
+        }
 
         [SerializeField]
         [Header("I18n text key")]

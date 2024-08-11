@@ -24,7 +24,7 @@ namespace EssentialToolkit.Dialogs
 
             foreach (var entry in _entries)
             {
-                dialogEntries.Add(new DialogEntry(text: entry.GetText(), code: entry.GetCode()));
+                dialogEntries.Add(new DialogEntry(text: entry.GetText(), baseProps: entry));
             }
 
             _dialogEntries = dialogEntries.ToArray();

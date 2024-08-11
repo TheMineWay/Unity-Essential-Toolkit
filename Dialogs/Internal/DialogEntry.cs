@@ -3,10 +3,12 @@ namespace EssentialToolkit.Dialogs
     public class DialogEntry : ARegisterDialogEntry
     {
 
-        public DialogEntry(string text, string code = null)
+        public DialogEntry(ARegisterDialogEntry baseProps, string text)
         {
             this.text = text;
-            base.code = code;
+            code = baseProps.GetCode();
+            speaker = baseProps.GetSpeaker();
+            images = baseProps.GetImages();
         }
 
         #region Properties

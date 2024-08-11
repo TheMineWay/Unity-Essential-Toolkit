@@ -53,7 +53,7 @@ namespace EssentialToolkit.Dialogs
             foreach (var entry in _entries)
             {
                 var text = I18nService.Translate(entry.GetKey(), translation);
-                dialogEntries.Add(new DialogEntry(text: text, code: entry.GetCode()));
+                dialogEntries.Add(new DialogEntry(text: text, baseProps: entry));
             }
 
             _dialogEntries = dialogEntries.ToArray();

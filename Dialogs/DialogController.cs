@@ -63,6 +63,14 @@ namespace EssentialToolkit.Dialogs
             // Invoke events
             onDialogChange.Invoke();
 
+            if (currentDialog != null)
+            {
+                var dialog = GetEntry((int)currentDialog);
+
+                onSpeaker.Invoke(dialog.GetSpeaker());
+                onImage.Invoke(dialog.GetImages());
+            }
+
             // Update UI
             UpdateDialogText();
         }
@@ -106,16 +114,24 @@ namespace EssentialToolkit.Dialogs
         {
             SetDialog(setp);
         }
-        public void NextDialog(int steps = 1)
+        public void NextDialog()
         {
             var newIndex = 0;
 
-            if (currentDialog == null) newIndex = steps;
-            else newIndex = (int)currentDialog + steps;
+            if (currentDialog == null) newIndex = 1;
+            else newIndex = (int)currentDialog + 1;
 
             SetDialog(newIndex);
         }
-        public void PrevDialog(int steps = 1) => NextDialog(steps * -1);
+        public void PrevDialog()
+        {
+            var newIndex = 0;
+
+            if (currentDialog == null) newIndex = 0;
+            else newIndex = (int)currentDialog - 1;
+
+            SetDialog(newIndex);
+        }
         #endregion
 
         #region Internal API
@@ -135,6 +151,10 @@ namespace EssentialToolkit.Dialogs
 
         #region Events
 
+        [Header("Called when the dialog changes passing speaker code")]
+        public UnityEvent<string> onSpeaker;
+        [Header("Called when the dialog changes passing image codes")]
+        public UnityEvent<string[]> onImage;
         [Header("Called when the dialog changes")]
         public UnityEvent onDialogChange;
         [Header("Called when there are no more dialogs left to display")]

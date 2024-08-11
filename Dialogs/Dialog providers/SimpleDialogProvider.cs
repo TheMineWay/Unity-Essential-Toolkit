@@ -4,12 +4,16 @@ using UnityEngine;
 
 namespace EssentialToolkit.Dialogs
 {
-    public class InspectorDialogProvider : MonoBehaviour, IDialogProvider
+    public class SimpleDialogProvider : MonoBehaviour, IDialogProvider
     {
         public OnDialogProviderDataChange onDialogProviderDataChange { get; set; }
 
         [SerializeField]
         private InspectorDialogEntry[] _entries;
+
+        [SerializeField]
+        [Header("If you provide a dialogs JSON file the inspector 'Entries' will be overriden")]
+        private TextAsset _jsonDialogEntries;
 
         private DialogEntry[] _dialogEntries;
 
@@ -36,6 +40,17 @@ namespace EssentialToolkit.Dialogs
         #endregion
 
         public DialogEntry[] GetEntries() => _dialogEntries;
+
+        #region Internal API
+
+        private void LoadJsonEntries()
+        {
+            if (!_jsonDialogEntries) return;
+
+            _entries = DialogEntry.ParseDialogEntryFromJSON<InspectorDialogEntry>(_jsonDialogEntries.text);
+        }
+
+        #endregion
     }
 
     [Serializable]

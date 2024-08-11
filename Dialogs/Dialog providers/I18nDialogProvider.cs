@@ -76,7 +76,7 @@ namespace EssentialToolkit.Dialogs
     }
 
     [Serializable]
-    public class I18nDialogEntry
+    public class I18nDialogEntry : ARegisterDialogEntry
     {
 
         [SerializeField]
@@ -84,10 +84,5 @@ namespace EssentialToolkit.Dialogs
         private string key;
 
         public string GetKey() => key;
-
-        [SerializeField]
-        [Header("Unique dialog entry identifier")]
-        private string code;
-        public string GetCode() => code.Trim() == "" ? null : code;
     }
 }

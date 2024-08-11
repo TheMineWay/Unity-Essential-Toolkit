@@ -39,7 +39,7 @@ namespace EssentialToolkit.Dialogs
     }
 
     [Serializable]
-    public class InspectorDialogEntry
+    public class InspectorDialogEntry : ARegisterDialogEntry
     {
         
         [SerializeField]
@@ -47,10 +47,6 @@ namespace EssentialToolkit.Dialogs
         private string text;
 
         public string GetText() => text;
-
-        [SerializeField]
-        [Header("Unique dialog entry identifier")]
-        private string code;
-        public string GetCode() => code.Trim() == "" ? null : code;
+        public void SetText(string text) => this.text = text;
     }
 }

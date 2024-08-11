@@ -1,14 +1,12 @@
-using System;
-
 namespace EssentialToolkit.Dialogs
 {
-    public class DialogEntry
+    public class DialogEntry : ARegisterDialogEntry
     {
 
         public DialogEntry(string text, string code = null)
         {
             this.text = text;
-            this.code = code;
+            base.code = code;
         }
 
         #region Properties
@@ -16,11 +14,12 @@ namespace EssentialToolkit.Dialogs
         private string text;
         public string GetText() => text;
         public void SetText(string text) => this.text = text;
+        #endregion
 
-        // Code
-        private string code;
-        public string GetCode() => code;
-        public void SetCode(string code) => this.code = code;
+        #region API
+
+        public bool HasSpeaker() => GetSpeaker() != null;
+
         #endregion
     }
 }

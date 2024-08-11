@@ -35,5 +35,17 @@ namespace EssentialToolkit.Dialogs
         public void SetImages(string[] images) => this.images = images;
 
         #endregion
+
+        #region Lock
+
+        // Represents if the dialog locks the dialog skip
+        [SerializeField]
+        [Header("Wether the dialog is skippable using NextDialog, PrevDialog or MoveDialog")]
+        protected bool locked;
+
+        public bool IsLocked() => locked;
+        public void SetLocked(bool locked) => this.locked = locked;
+
+        #endregion
     }
 }

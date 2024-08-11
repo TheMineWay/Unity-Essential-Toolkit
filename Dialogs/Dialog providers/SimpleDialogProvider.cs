@@ -58,12 +58,13 @@ namespace EssentialToolkit.Dialogs
     [Serializable]
     public class SimpleDialogEntry : ARegisterDialogEntry
     {
-        public SimpleDialogEntry(string text, string code, string speaker, string[] images)
+        public SimpleDialogEntry(string text, string code, string speaker, string[] images, bool locked)
         {
             this.text = text;
             base.code = code;
             base.images = images;
             base.speaker = speaker;
+            base.locked = locked;
         }
 
         [SerializeField]

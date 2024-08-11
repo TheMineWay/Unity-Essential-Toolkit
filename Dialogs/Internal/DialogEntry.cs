@@ -13,6 +13,7 @@ namespace EssentialToolkit.Dialogs
             code = baseProps.GetCode();
             speaker = baseProps.GetSpeaker();
             images = baseProps.GetImages();
+            locked = baseProps.IsLocked();
         }
 
         #region Properties

@@ -114,23 +114,28 @@ namespace EssentialToolkit.Dialogs
         {
             SetDialog(setp);
         }
-        public void NextDialog()
-        {
-            var newIndex = 0;
 
-            if (currentDialog == null) newIndex = 1;
-            else newIndex = (int)currentDialog + 1;
+        public void MoveDialog(int steps = 1, bool bypassLock = false)
+        {
+            if (currentDialog == null)
+            {
+                SetDialog(steps);
+                return;
+            }
+
+            if (GetEntry((int)currentDialog).IsLocked() && bypassLock == false) return;
+
+            var newIndex = (int)currentDialog + steps;
 
             SetDialog(newIndex);
         }
-        public void PrevDialog()
+        public void NextDialog(bool bypassLock = false)
         {
-            var newIndex = 0;
-
-            if (currentDialog == null) newIndex = 0;
-            else newIndex = (int)currentDialog - 1;
-
-            SetDialog(newIndex);
+            MoveDialog(1, bypassLock);
+        }
+        public void PrevDialog(bool bypassLock = false)
+        {
+            MoveDialog(-1, bypassLock);
         }
         #endregion
 

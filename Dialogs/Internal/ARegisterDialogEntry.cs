@@ -19,7 +19,7 @@ namespace EssentialToolkit.Dialogs
         // Represents who is speaking
         [SerializeField]
         protected string speaker;
-        public string GetSpeaker() => speaker.Trim() == "" ? null : speaker;
+        public string GetSpeaker() => speaker?.Trim() == "" ? null : speaker;
         public void SetSpeaker(string speaker) => this.speaker = speaker;
 
         #endregion

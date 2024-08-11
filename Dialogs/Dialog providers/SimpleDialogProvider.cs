@@ -9,7 +9,7 @@ namespace EssentialToolkit.Dialogs
         public OnDialogProviderDataChange onDialogProviderDataChange { get; set; }
 
         [SerializeField]
-        private InspectorDialogEntry[] _entries;
+        private SimpleDialogEntry[] _entries;
 
         [SerializeField]
         [Header("If you provide a dialogs JSON file the inspector 'Entries' will be overriden")]
@@ -24,6 +24,8 @@ namespace EssentialToolkit.Dialogs
 
         private void Awake()
         {
+            LoadJsonEntries();
+
             var dialogEntries = new List<DialogEntry>();
 
             foreach (var entry in _entries)
@@ -47,16 +49,23 @@ namespace EssentialToolkit.Dialogs
         {
             if (!_jsonDialogEntries) return;
 
-            _entries = DialogEntry.ParseDialogEntryFromJSON<InspectorDialogEntry>(_jsonDialogEntries.text);
+            _entries = DialogEntry.ParseDialogEntryFromJSON<SimpleDialogEntry>(_jsonDialogEntries.text);
         }
 
         #endregion
     }
 
     [Serializable]
-    public class InspectorDialogEntry : ARegisterDialogEntry
+    public class SimpleDialogEntry : ARegisterDialogEntry
     {
-        
+        public SimpleDialogEntry(string text, string code, string speaker, string[] images)
+        {
+            this.text = text;
+            base.code = code;
+            base.images = images;
+            base.speaker = speaker;
+        }
+
         [SerializeField]
         [Header("Text to display")]
         private string text;

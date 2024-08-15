@@ -15,6 +15,11 @@
         ]
     },
     "i-3": {
+        "key": "test4",
+        "speaker": "",
+        "images": []
+    },
+    "i-4": {
         "key": "test5",
         "speaker": "",
         "images": [
@@ -25,7 +30,7 @@
         ],
         "locked": true
     },
-    "i-4": {
+    "i-5": {
         "key": "test10",
         "speaker": "",
         "images": []

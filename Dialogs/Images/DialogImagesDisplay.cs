@@ -1,6 +1,8 @@
 using EssentialToolkit.Core;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace EssentialToolkit.Dialogs
@@ -25,6 +27,33 @@ namespace EssentialToolkit.Dialogs
 
         #endregion
 
+        #region State
+
+        private string currentImageId = null;
+        public string GetCurrentImageId() => currentImageId;
+        private void SetImage(Sprite image, string imageId)
+        {
+            // If the image has not changed, state remains the same
+            if (currentImageId == imageId) return;
+
+            // Update current state
+            currentImageId = imageId;
+
+            // Update image
+            _imageDisplay.sprite = image;
+
+            onImageChange.Invoke();
+        }
+
+        #endregion
+
+        #region Events
+
+        [SerializeField]
+        private UnityEvent onImageChange;
+
+        #endregion
+
         #region Initialization
 
         public override void Initialize()
@@ -43,10 +72,18 @@ namespace EssentialToolkit.Dialogs
 
         public void DisplayImage(string imageId)
         {
+            if (imageId == null)
+            {
+                SetImage(null, null);
+                return;
+            }
+
             var image = DialogImagesProvider.GetImage(imageId);
 
-            _imageDisplay.sprite = image;
+            SetImage(image, imageId);
         }
+
+        public void Clear() => DisplayImage(null);
 
         #endregion
 
@@ -67,14 +104,29 @@ namespace EssentialToolkit.Dialogs
             displayer.DisplayImage(imageId);
         }
 
-        public static void DisplayImages(ARegisterDialogEntry.Image[] images)
+        public static void DisplayImages(ARegisterDialogEntry.Image[] images, bool cleanup = true)
         {
             foreach (var image in images)
             {
                 DisplayImage(image.image, image.target);
             }
+
+            // If cleanup is enabled, not specified displayers will reset its image
+            if (cleanup)
+            {
+                var targets = from image in images select image.target;
+
+                // Pick only targets that are not in use by this method call
+                var toClean = from displayer in GetAllDisplayers() where !targets.Contains(displayer.displayId) select displayer;
+
+                foreach (var target in toClean)
+                {
+                    target.Clear();
+                }
+            }
         }
 
+        public static DialogImagesDisplay[] GetAllDisplayers() => new DialogImagesDisplay[] { defaultDisplayer }.Concat(imageDisplayers.Values).ToArray();
         #endregion
     }
 }

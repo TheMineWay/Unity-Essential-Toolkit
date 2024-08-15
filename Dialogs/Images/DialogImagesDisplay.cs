@@ -107,11 +107,6 @@ namespace EssentialToolkit.Dialogs
 
         public static void DisplayImages(ARegisterDialogEntry.Image[] images, bool cleanup = true)
         {
-            foreach (var image in images)
-            {
-                DisplayImage(image.image, image.target);
-            }
-
             // If cleanup is enabled, not specified displayers will reset its image
             if (cleanup)
             {
@@ -124,6 +119,12 @@ namespace EssentialToolkit.Dialogs
                 {
                     target.Clear();
                 }
+            }
+
+            // Begin display
+            foreach (var image in images)
+            {
+                DisplayImage(image.image, image.target);
             }
         }
 

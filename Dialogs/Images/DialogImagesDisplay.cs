@@ -50,6 +50,7 @@ namespace EssentialToolkit.Dialogs
         #region Events
 
         [SerializeField]
+        [Header("Whenever this displayer renders an image")]
         private UnityEvent onImageChange;
 
         #endregion

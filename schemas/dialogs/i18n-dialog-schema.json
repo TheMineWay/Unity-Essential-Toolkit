@@ -1,0 +1,40 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "additionalProperties": {
+        "type": "object",
+        "properties": {
+            "key": {
+                "type": "string"
+            },
+            "speaker": {
+                "type": "string"
+            },
+            "images": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "image": {
+                            "type": "string"
+                        },
+                        "target": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "image"
+                    ],
+                    "additionalProperties": false
+                }
+            },
+            "locked": {
+                "type": "boolean"
+            }
+        },
+        "required": [
+            "key"
+        ],
+        "additionalProperties": false
+    }
+}

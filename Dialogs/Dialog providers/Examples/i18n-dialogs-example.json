@@ -17,7 +17,12 @@
     "i-3": {
         "key": "test5",
         "speaker": "",
-        "images": [],
+        "images": [
+            {
+                "image": "image-1",
+                "target": "1"
+            }
+        ],
         "locked": true
     },
     "i-4": {

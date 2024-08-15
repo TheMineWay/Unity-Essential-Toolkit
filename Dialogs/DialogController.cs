@@ -67,6 +67,8 @@ namespace EssentialToolkit.Dialogs
             {
                 var dialog = GetEntry((int)currentDialog);
 
+                DialogImagesDisplay.DisplayImages(dialog.GetImages());
+
                 onSpeaker.Invoke(dialog.GetSpeaker());
                 onImage.Invoke(dialog.GetImages());
             }
@@ -159,7 +161,7 @@ namespace EssentialToolkit.Dialogs
         [Header("Called when the dialog changes passing speaker code")]
         public UnityEvent<string> onSpeaker;
         [Header("Called when the dialog changes passing image codes")]
-        public UnityEvent<string[]> onImage;
+        public UnityEvent<ARegisterDialogEntry.Image[]> onImage;
         [Header("Called when the dialog changes")]
         public UnityEvent onDialogChange;
         [Header("Called when there are no more dialogs left to display")]

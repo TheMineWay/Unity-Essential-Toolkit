@@ -3,13 +3,21 @@
         "text": "Hello from example",
         "speaker": "",
         "images": [
-            "image-1"
+            {
+                "image": "image-1",
+                "target": ""
+            }
         ]
     },
     "i-2": {
         "text": "Second sentence",
         "speaker": "",
-        "images": []
+        "images": [
+            {
+                "image": "image-1",
+                "target": "1"
+            }
+        ]
     },
     "i-3": {
         "text": "Third sentence",

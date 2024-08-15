@@ -29,10 +29,10 @@ namespace EssentialToolkit.Dialogs
         // Represents images to display (by image code)
         [SerializeField]
         [Header("Image codes to be displayed along with this dialog")]
-        protected string[] images;
+        protected Image[] images;
 
-        public string[] GetImages() => images;
-        public void SetImages(string[] images) => this.images = images;
+        public Image[] GetImages() => images;
+        public void SetImages(Image[] images) => this.images = images;
 
         #endregion
 
@@ -47,5 +47,11 @@ namespace EssentialToolkit.Dialogs
         public void SetLocked(bool locked) => this.locked = locked;
 
         #endregion
+
+        public class Image
+        {
+            public string image;
+            public string target;
+        }
     }
 }

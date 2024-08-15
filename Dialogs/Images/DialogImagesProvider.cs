@@ -44,7 +44,7 @@ namespace EssentialToolkit.Dialogs
         {
             foreach (var image in _images)
             {
-                images.Remove(image.GetKey());
+                RemoveImage(image.GetKey());
             }
         }
 
@@ -52,6 +52,14 @@ namespace EssentialToolkit.Dialogs
          * Removes all loaded images
          */
         public void UnloadAll() => images.Clear();
+
+        #endregion
+
+        #region Static API
+
+        public static Sprite GetImage(string imageId) => images.ContainsKey(imageId) ? images[imageId] : null;
+        public static void AddImage(string imageId, Sprite image) => images.Add(imageId, image);
+        public static void RemoveImage(string imageId) => images.Remove(imageId);
 
         #endregion
     }

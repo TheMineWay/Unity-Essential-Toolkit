@@ -8,7 +8,10 @@
         "key": "test3",
         "speaker": "",
         "images": [
-            "image-1"
+            {
+                "image": "image-1",
+                "target": ""
+            }
         ]
     },
     "i-3": {

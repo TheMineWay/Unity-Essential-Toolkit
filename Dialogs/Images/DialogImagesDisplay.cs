@@ -61,6 +61,9 @@ namespace EssentialToolkit.Dialogs
         {
 #if UNITY_EDITOR
             if (displayId != "" && displayId.Trim() == "") Debug.LogWarning("Detected a displayId containing only spaces. This might be a developer error. If it is not, please, do not use only spaces to identify a DialogImagesDisplay (or any other component)");
+
+            if (displayId == "" && defaultDisplayer != null) Debug.LogWarning("There is already a default dialog image displayer but you have registered another one. This might have been caused because you have two or more DialogImagesDisplay scripts present in your scene with no displayId value.");
+            if (imageDisplayers.Keys.Contains(displayId)) Debug.LogWarning($"There is already a DialogImagesDisplay registered with the id \"{displayId}\" but two or more have been registered. This can be caused because you repeated ids. Check that all have unique ids.");
 # endif
 
             if (displayId == "") defaultDisplayer = this;

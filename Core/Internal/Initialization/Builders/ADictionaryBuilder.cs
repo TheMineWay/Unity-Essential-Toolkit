@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace EssentialToolkit.Core
@@ -23,6 +24,10 @@ namespace EssentialToolkit.Core
             foreach (var item in list) dict[item.GetKey()] = item.GetValue();
 
             return dict;
+        }
+
+        public static Dictionary<string, T> Merge(ADictionaryBuilder<T>[] dbuilder, Dictionary<string, T> other) {
+            return other.Concat(ToDictionary(dbuilder)).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
     }
 }

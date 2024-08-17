@@ -6,6 +6,12 @@ sidebar_position: 4
 
 Dialog providers are used to feed the `DialogController` with dialog entries. There can be different dialog origins (translation files, etc) so you can use any script that implements the `IDialogProvider` interface (even create your own). This dialog provider script has to be attached to the same GameObject as the `DialogController`.
 
+:::warning
+
+You should not attach more than one provider script per GameObject. The `DialogController` will integrate only one, so having more than one could cause unexpected behaviours.
+
+:::
+
 ## Dialogs feed flow
 
 See the diagram to understand the data feed process.

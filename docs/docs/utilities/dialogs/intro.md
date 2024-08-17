@@ -16,3 +16,7 @@ Dialogs can be specified officially by two ways:
 
 - Unity's Inspector: directly in any dialog provider there is an interface where you can write dialogs.
 - JSON files: on all dialog providers there is a slot where you can provide a _Text Asset_ (a JSON file). This file must be a well structured JSON file.
+
+## Can I have more than one dialog per scene?
+
+Yes you can! You can have as much `DialogControllers` as you need in each scene. You just need to ensure each one is well-initialized. You can do so by following this documentation 😺.

@@ -17,6 +17,10 @@ namespace EssentialToolkit.Dialogs
 
         public override void Initialize()
         {
+            // Subscribe to ManagedControlls
+            DialogManagedControls.eventBus += ManagedControlsHandler;
+
+            // Initialize
             if (initializeComponents != null) return;
             initializeComponents = StartCoroutine(InitializeComponents());
         }
@@ -37,6 +41,9 @@ namespace EssentialToolkit.Dialogs
 
         private void OnDestroy()
         {
+            // Unsubscribe from managed controlls
+            DialogManagedControls.eventBus -= ManagedControlsHandler;
+
             // Remove update event
             _dialogProvider.onDialogProviderDataChange -= UpdateDialogText;
         }
@@ -75,6 +82,22 @@ namespace EssentialToolkit.Dialogs
 
             // Update UI
             UpdateDialogText();
+        }
+
+        #endregion
+
+        #region Managed controls
+
+        private void ManagedControlsHandler(DialogManagedControlsEventMessages message)
+        {
+            switch (message) {
+                case DialogManagedControlsEventMessages.PREV:
+                    PrevDialog();
+                    break;
+                case DialogManagedControlsEventMessages.NEXT:
+                    NextDialog();
+                    break;
+            }
         }
 
         #endregion

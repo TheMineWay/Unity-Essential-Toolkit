@@ -42,7 +42,7 @@ Read the [official documentation](https://themineway.github.io/Unity-Essential-T
             Dialogs
         </td>
         <td>
-            ⚠️ Unstable
+            ✅ Available
         </td>
     </tr>
 </table>

@@ -9,37 +9,41 @@ The `IDialogProvider` is the interface that acts as the blueprint for any dialog
 ## Methods API
 
 <table>
-    <tr>
-        <td>**Method**</td>
-        <td>**Parameters**</td>
-        <td>**Returns**</td>
-        <td>**Description**</td>
-    </tr>
-    <tr>
-        <td>IsReady</td>
-        <td></td>
-        <td>`bool`: ready state</td>
-        <td>Checks if the provider is ready to start feeding dialogs.</td>
-    </tr>
-    <tr>
-        <td>GetEntries</td>
-        <td></td>
-        <td>`DialogEntry[]`: dialogs</td>
-        <td>Gets all dialogs as `DialogEntry[]`.</td>
-    </tr>
+    <tbody>
+        <tr>
+            <td>**Method**</td>
+            <td>**Parameters**</td>
+            <td>**Returns**</td>
+            <td>**Description**</td>
+        </tr>
+        <tr>
+            <td>IsReady</td>
+            <td></td>
+            <td>`bool`: ready state</td>
+            <td>Checks if the provider is ready to start feeding dialogs.</td>
+        </tr>
+        <tr>
+            <td>GetEntries</td>
+            <td></td>
+            <td>`DialogEntry[]`: dialogs</td>
+            <td>Gets all dialogs as `DialogEntry[]`.</td>
+        </tr>
+    </tbody>
 </table>
 
 ## Events
 
 <table>
-    <tr>
-        <td>**Event**</td>
-        <td>**Parameters**</td>
-        <td>**Description**</td>
-    </tr>
-    <tr>
-        <td>onDialogProviderDataChange</td>
-        <td></td>
-        <td>Called by the dialog provider whenever the dialogs provider data is updated.</td>
-    </tr>
+    <tbody>
+        <tr>
+            <td>**Event**</td>
+            <td>**Parameters**</td>
+            <td>**Description**</td>
+        </tr>
+        <tr>
+            <td>onDialogProviderDataChange</td>
+            <td></td>
+            <td>Called by the dialog provider whenever the dialogs provider data is updated.</td>
+        </tr>
+    </tbody>
 </table>

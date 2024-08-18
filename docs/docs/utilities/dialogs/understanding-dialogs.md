@@ -27,13 +27,18 @@ All dialogs end up being composed by some properties (it does not matter the ori
         </tr>
         <tr>
             <td>images</td>
-            <td>`Image`</td>
+            <td>`Image[]`</td>
             <td>It stores the images that will be displayed along the dialog.</td>
         </tr>
         <tr>
             <td>locked</td>
             <td>`bool`</td>
             <td>It stores wether the dialog will be locked (it means the dialog cannot be skipped using managed dialog controls).</td>
+        </tr>
+        <tr>
+            <td>events</td>
+            <td>`string[]`</td>
+            <td>It stores event codes that get called when the dialog is displayed.</td>
         </tr>
     </tbody>
 </table>

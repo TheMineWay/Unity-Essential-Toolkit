@@ -142,11 +142,8 @@ namespace EssentialToolkit.Dialogs
 
         public void MoveDialog(int steps = 1, bool bypassLock = false)
         {
-            if (currentDialog == null)
-            {
-                SetDialog(steps);
-                return;
-            }
+            // If it is not active it does nothing
+            if (currentDialog == null) return;
 
             if (GetEntry((int)currentDialog).IsLocked() && bypassLock == false) return;
 

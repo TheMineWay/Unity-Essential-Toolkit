@@ -23,7 +23,10 @@
     "i-3": {
         "text": "Third sentence",
         "speaker": "",
-        "images": []
+        "images": [],
+        "events": [
+            "test-event-1"
+        ]
     },
     "i-4": {
         "text": ":D",

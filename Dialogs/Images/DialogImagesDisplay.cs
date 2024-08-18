@@ -70,6 +70,11 @@ namespace EssentialToolkit.Dialogs
             else imageDisplayers.Add(displayId, this);
         }
 
+        private void OnDestroy()
+        {
+            imageDisplayers.Remove(displayId);
+        }
+
         #endregion
 
         #region API

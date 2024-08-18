@@ -51,7 +51,6 @@ namespace EssentialToolkit.Dialogs
         /**
          * Removes all loaded images
          */
-        public void UnloadAll() => images.Clear();
 
         #endregion
 
@@ -60,6 +59,7 @@ namespace EssentialToolkit.Dialogs
         public static Sprite GetImage(string imageId) => images.ContainsKey(imageId) ? images[imageId] : null;
         public static void AddImage(string imageId, Sprite image) => images.Add(imageId, image);
         public static void RemoveImage(string imageId) => images.Remove(imageId);
+        public static void UnloadAllImages() => images.Clear();
 
         #endregion
     }

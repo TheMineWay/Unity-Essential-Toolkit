@@ -14,6 +14,13 @@ namespace EssentialToolkit.Dialogs
         public void PrevDialog() => eventBus.Invoke(DialogManagedControlsEventMessages.PREV);
 
         #endregion
+
+        #region Method events
+
+        private void OnNextDialog() => NextDialog();
+        private void OnPrevDialog() => PrevDialog();
+
+        #endregion
     }
 
     internal enum DialogManagedControlsEventMessages

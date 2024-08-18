@@ -1,0 +1,4 @@
+Dependencies for Dialogs
+
+- Core
+- I18n

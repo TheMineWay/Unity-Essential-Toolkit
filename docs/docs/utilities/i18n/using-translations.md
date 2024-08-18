@@ -12,15 +12,17 @@ Having all translation files initialized does not mean that they are all loaded 
 So, if you want to use some translations in a scene you have to select which ones you are going to use (what translation files will be available).
 
 <table>
-    <tr>
-        <td>Example</td>
-    </tr>
-    <tr>
-        <td>
-        If you have three translation files (common.json, scene-1.json and scene-2.json) and you are on the scene 1 you might want to load _common.json_ and _scene-1.json_.
-        <br/>_scene-2.json_ will not be loaded because you are not using any of its translations (if you wanted so, you had to load it as well).
-        </td>
-    </tr>
+    <tbody>
+        <tr>
+            <td>Example</td>
+        </tr>
+        <tr>
+            <td>
+            If you have three translation files (common.json, scene-1.json and scene-2.json) and you are on the scene 1 you might want to load _common.json_ and _scene-1.json_.
+            <br/>_scene-2.json_ will not be loaded because you are not using any of its translations (if you wanted so, you had to load it as well).
+            </td>
+        </tr>
+    </tbody>
 </table>
 
 ## Load scene translations

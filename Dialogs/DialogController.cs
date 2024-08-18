@@ -157,6 +157,7 @@ namespace EssentialToolkit.Dialogs
         }
         public void PrevDialog(bool bypassLock = false)
         {
+            if (currentDialog - 1 < 0) return;
             MoveDialog(-1, bypassLock);
         }
         #endregion

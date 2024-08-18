@@ -1,7 +1,3 @@
----
-sidebar_position: 5
----
-
 # DialogManagedControls
 
 The `DialogManagedControls` is the class responsible for managing controls in a centralized and standard way. It provides some methods that invoke methods from all `DialogController` scripts present in the scene.

@@ -1,7 +1,3 @@
----
-sidebar_position: 3
----
-
 # DialogImagesProvider
 
 The `DialogImagesProvider` is the class responsible for providing images that will be able to be displayed when necessary.

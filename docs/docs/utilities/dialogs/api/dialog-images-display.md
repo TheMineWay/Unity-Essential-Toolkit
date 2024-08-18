@@ -1,7 +1,3 @@
----
-sidebar_position: 4
----
-
 # DialogImagesDisplay
 
 The `DialogImagesDisplay` is the class responsible for displaying images when necessary.

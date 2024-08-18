@@ -1,7 +1,3 @@
----
-sidebar_position: 2
----
-
 # IDialogProvider
 
 The `IDialogProvider` is the interface that acts as the blueprint for any dialog provider. All dialog providers have to implement this interface. Once they do so, they will be available to be used as dialog providers.

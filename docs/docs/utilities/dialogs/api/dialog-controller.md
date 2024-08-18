@@ -1,7 +1,3 @@
----
-sidebar_position: 1
----
-
 # DialogController
 
 The `DialogController` is the class responsible for managing dialogs display. It stores the current display state and displays dialogs as desired (calling respective events when necessary).

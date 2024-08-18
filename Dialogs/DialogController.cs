@@ -17,7 +17,7 @@ namespace EssentialToolkit.Dialogs
 
         public override void Initialize()
         {
-            // Subscribe to ManagedControlls
+            // Subscribe to ManagedControls
             DialogManagedControls.eventBus += ManagedControlsHandler;
 
             // Initialize
@@ -41,7 +41,7 @@ namespace EssentialToolkit.Dialogs
 
         private void OnDestroy()
         {
-            // Unsubscribe from managed controlls
+            // Unsubscribe from managed controls
             DialogManagedControls.eventBus -= ManagedControlsHandler;
 
             // Remove update event
@@ -90,7 +90,8 @@ namespace EssentialToolkit.Dialogs
 
         private void ManagedControlsHandler(DialogManagedControlsEventMessages message)
         {
-            switch (message) {
+            switch (message)
+            {
                 case DialogManagedControlsEventMessages.PREV:
                     PrevDialog();
                     break;

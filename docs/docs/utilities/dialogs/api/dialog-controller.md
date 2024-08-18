@@ -17,6 +17,12 @@ The `DialogController` is the class responsible for managing dialogs display. It
             <td>**Description**</td>
         </tr>
         <tr>
+            <td>IsActive</td>
+            <td></td>
+            <td>`bool`</td>
+            <td>Wether there is an active dialog (a dialog being displayed) or not.</td>
+        </tr>
+        <tr>
             <td>SetDialog</td>
             <td>`string`: dialog code</td>
             <td></td>

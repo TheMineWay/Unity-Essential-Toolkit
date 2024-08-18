@@ -30,7 +30,6 @@ Here is a JSON file example:
 
 ```json
 {
-  "$schema": "",
   "i-1": {
     "text": "Hello from example",
     "speaker": "",

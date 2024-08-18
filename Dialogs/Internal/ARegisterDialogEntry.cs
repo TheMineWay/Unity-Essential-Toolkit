@@ -48,6 +48,17 @@ namespace EssentialToolkit.Dialogs
 
         #endregion
 
+        #region Events
+
+        [SerializeField]
+        [Header("Event codes that will be invoked when the dialog gets displayed")]
+        protected string[] events;
+
+        public string[] GetEvents() => events;
+        public void SetEvents(string[] events) => this.events = events;
+
+        #endregion
+
         public class Image
         {
             public string image;

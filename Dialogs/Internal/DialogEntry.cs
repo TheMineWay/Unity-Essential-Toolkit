@@ -14,6 +14,7 @@ namespace EssentialToolkit.Dialogs
             speaker = baseProps.GetSpeaker();
             images = baseProps.GetImages();
             locked = baseProps.IsLocked();
+            events = baseProps.GetEvents();
         }
 
         #region Properties
@@ -29,7 +30,7 @@ namespace EssentialToolkit.Dialogs
 
         #endregion
 
-# region Static API
+        # region Static API
 
         public static T[] ParseDialogEntryFromJSON<T>(string json) where T : ARegisterDialogEntry {
 
@@ -53,6 +54,6 @@ namespace EssentialToolkit.Dialogs
             }
         }
 
-# endregion
+        # endregion
     }
 }

@@ -12,6 +12,9 @@
                 "image": "image-1",
                 "target": ""
             }
+        ],
+        "events": [
+            "test-event-1"
         ]
     },
     "i-3": {

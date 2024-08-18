@@ -70,7 +70,7 @@ namespace EssentialToolkit.Dialogs
             // Invoke events
             onDialogChange.Invoke();
 
-            if (currentDialog != null)
+            if (IsActive())
             {
                 var dialog = GetEntry((int)currentDialog);
 
@@ -78,6 +78,7 @@ namespace EssentialToolkit.Dialogs
 
                 onSpeaker.Invoke(dialog.GetSpeaker());
                 onImage.Invoke(dialog.GetImages());
+                DialogEventsProvider.InvokeEvents(dialog.GetEvents());
             }
 
             // Update UI
@@ -104,6 +105,11 @@ namespace EssentialToolkit.Dialogs
         #endregion
 
         #region API
+
+        /**
+         * Wether there is a dialog being displayed or not
+         */
+        public bool IsActive() => currentDialog != null;
 
         /**
          * Set current dialog by its code (if not found an Exception is thrown)
@@ -161,6 +167,7 @@ namespace EssentialToolkit.Dialogs
             if (currentDialog - 1 < 0) return;
             MoveDialog(-1, bypassLock);
         }
+
         #endregion
 
         #region Internal API

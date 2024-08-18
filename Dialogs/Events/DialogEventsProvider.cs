@@ -11,6 +11,7 @@ namespace EssentialToolkit.Dialogs
         #region Static event providers store
 
         private static List<DialogEventsProvider> providers = new();
+        public static OnDialogEventCalled onDialogEventCalled;
 
         #endregion
 
@@ -39,27 +40,43 @@ namespace EssentialToolkit.Dialogs
 
         #endregion
 
-        #region API
+        #region Internal API
 
-        public void Invoke(string eventId)
+        private void _Invoke(string eventId, bool callDelegateEventsListener = true)
         {
+            if (callDelegateEventsListener) onDialogEventCalled?.Invoke(eventId);
+
             if (!events.ContainsKey(eventId)) return;
-            
+
             var ev = events[eventId];
             ev.Invoke();
         }
 
         #endregion
 
-        #region Static API
+        #region API
 
-        public static void InvokeEvent(string eventId)
+        public void Invoke(string eventId) => _InvokeEvent(eventId);
+
+        #endregion
+
+        #region Internal static API
+
+        private static void _InvokeEvent(string eventId)
         {
+            bool callEventDelegate = true;
             foreach (var provider in providers)
             {
-                provider.Invoke(eventId);
+                provider._Invoke(eventId, callDelegateEventsListener: callEventDelegate);
+                callEventDelegate = false;
             }
         }
+
+        #endregion
+
+        #region Static API
+
+        public static void InvokeEvent(string eventId) => _InvokeEvent(eventId);
 
         public static void InvokeEvents(string[] eventIds)
         {

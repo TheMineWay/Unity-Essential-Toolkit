@@ -26,7 +26,7 @@ Learn about each official dialogs provider.
 
 This is the simplest dialog. You configure directly the text that is going to be displayed. It also allows you to provide the dialog basics.
 
-Here is a JSON file example (and the [JSON schema](https://github.com/TheMineWay/Unity-Essential-Toolkit/tree/main/schemas/dialogs/simple-dialog-schema.json))
+Here is a JSON file example:
 
 ```json
 {
@@ -68,7 +68,7 @@ Here is a JSON file example (and the [JSON schema](https://github.com/TheMineWay
 
 This dialog provider is used when you want to use i18n keys on dialogs. Instead of providing the text that will be displayed you provide the _I18n key_ and the _I18n translation set_. The key must be available on the scene in order to be able to display the translation (this means following all [I18n initialization steps](/docs/utilities/i18n/using-translations)).
 
-Here is a JSON file example (and the [JSON schema](https://github.com/TheMineWay/Unity-Essential-Toolkit/tree/main/schemas/dialogs/i18n-dialog-schema.json))
+Here is a JSON file example:
 
 ```json
 {

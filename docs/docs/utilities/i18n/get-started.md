@@ -34,35 +34,37 @@ locales
 Translations are stored as JSON files. You can nest translations as much as you want. All end values must be strings, that means that all paths must lead to a text (not a number, boolean or empty object). You cannot incorporate arrays in the translation file.
 
 <table>
-    <tr>
-        <td>Valid translation file</td>
-        <td>Invalid translation file</td>
-    </tr>
-    <tr>
-        <td>
-        ```json
-        {
-            "times": "2",
-            "greeting": "Hello!",
-            "nested-translations": {
-                "dialog-1": "Once upon a time...",
-                "dialog-2": "It's been so long"
+    <tbody>
+        <tr>
+            <td>Valid translation file</td>
+            <td>Invalid translation file</td>
+        </tr>
+        <tr>
+            <td>
+            ```json
+            {
+                "times": "2",
+                "greeting": "Hello!",
+                "nested-translations": {
+                    "dialog-1": "Once upon a time...",
+                    "dialog-2": "It's been so long"
+                }
             }
-        }
-        ```
-        </td>
-        <td>
-        ```jsonc
-        {
-            "times": 2, ❌ You cannot use numbers (use "2")
-            "something": true, ❌ You cannot use booleans
-            "dialogs": {}, ❌ Empty object
-            "more-dialogs": [], ❌ You cannot use arrays
-            "greeting": "Hello!", ❌ Trailing comma
-        }
-        ```
-        </td>
-    </tr>
+            ```
+            </td>
+            <td>
+            ```jsonc
+            {
+                "times": 2, ❌ You cannot use numbers (use "2")
+                "something": true, ❌ You cannot use booleans
+                "dialogs": {}, ❌ Empty object
+                "more-dialogs": [], ❌ You cannot use arrays
+                "greeting": "Hello!", ❌ Trailing comma
+            }
+            ```
+            </td>
+        </tr>
+    </tbody>
 </table>
 
 Following up with the hierarchy example, as you can imagine, the **common.json** file inside the en_US folder has its Spanish translation in the **common.json** file inside the es_ES folder. Both files **MUST** have the same JSON structure.
@@ -70,36 +72,38 @@ Following up with the hierarchy example, as you can imagine, the **common.json**
 For example:
 
 <table>
-    <tr>
-        <td>en_US/common.json</td>
-        <td>es_ES/common.json</td>
-    </tr>
-    <tr>
-        <td>
-            ```json
-            {
-                "title": "My game title",
-                "subtitle": "Made by me",
-                "actions": {
-                    "exit": "Exit game",
-                    "share": "Share"
+    <tbody>
+        <tr>
+            <td>en_US/common.json</td>
+            <td>es_ES/common.json</td>
+        </tr>
+        <tr>
+            <td>
+                ```json
+                {
+                    "title": "My game title",
+                    "subtitle": "Made by me",
+                    "actions": {
+                        "exit": "Exit game",
+                        "share": "Share"
+                    }
                 }
-            }
-            ```
-        </td>
-        <td>
-            ```json
-            {
-                "title": "Título de mi juego",
-                "subtitle": "Hecho por mí",
-                "actions": {
-                    "exit": "Salir del juego",
-                    "share": "Compartir"
+                ```
+            </td>
+            <td>
+                ```json
+                {
+                    "title": "Título de mi juego",
+                    "subtitle": "Hecho por mí",
+                    "actions": {
+                        "exit": "Salir del juego",
+                        "share": "Compartir"
+                    }
                 }
-            }
-            ```
-        </td>
-    </tr>
+                ```
+            </td>
+        </tr>
+    </tbody>
 </table>
 
 As you can see the i18n utility will be able to find translations across languages by using the same path. Example: `actions.exit` will resolve in _Exit game_, but in Spanish it will be _Salir del juego_.

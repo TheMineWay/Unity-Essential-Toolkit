@@ -67,7 +67,13 @@ namespace EssentialToolkit.Dialogs
 # endif
 
             if (displayId == "") defaultDisplayer = this;
-            else imageDisplayers.Add(displayId, this);
+            else
+            {
+                lock(imageDisplayers)
+                {
+                    imageDisplayers.Add(displayId, this);
+                }
+            }
         }
 
         private void OnDestroy()

@@ -3,8 +3,8 @@ using System.Linq;
 
 namespace EssentialToolkit.Storage
 {
-    public delegate void OnSlotChanged();
-    public class StorageService
+    internal delegate void OnSlotChanged();
+    internal class StorageService
     {
         public StorageService(IStorageConnector storageConnector = null, string slot = null) {
             if (storageConnector != null) _storageConnector = storageConnector;

@@ -21,6 +21,7 @@ Within the package there are some official storage connectors:
 
 - `PlayerprefsStorageConnector`: Stores data in the PlayerPrefs storage. Data is not lost when the game is closed.
 - `InMemoryStorageConnector`: Stores data in memory. Data is lost when the game is closed.
+- `LocalFileStorageConnector`: (refered as JSON file). It stores data in a custom file in the game directory (recommended only for desktop developments).
 
 You can always create your own storage connectors. You can do so by creating a class that implements the `IStorageConnector`.
 

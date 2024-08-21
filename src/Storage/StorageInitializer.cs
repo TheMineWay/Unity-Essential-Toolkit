@@ -50,6 +50,7 @@ namespace EssentialToolkit.Storage
             {
                 case StorageType.PLAYERPREFS: return new PlayerprefsStorageConnector();
                 case StorageType.IN_MEMORY: return new InMemoryStorageConnector();
+                case StorageType.JSON_FILE: return new LocalFileStorageConnector();
             }
 
             throw new Exception($"Storage service not found: {storageType}");
@@ -59,6 +60,7 @@ namespace EssentialToolkit.Storage
     enum StorageType
     {
         PLAYERPREFS,
+        JSON_FILE,
         IN_MEMORY
     }
 }

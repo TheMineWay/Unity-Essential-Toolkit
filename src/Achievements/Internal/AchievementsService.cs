@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace EssentialToolkit.Achievements
 {
-    public delegate void OnAchievementUnlocked(Achievements achievements);
-    public class AchievementsService
+    internal delegate void OnAchievementUnlocked(Achievements achievements);
+    internal class AchievementsService
     {
 
         private const string UNLOCKED_ACHIEVEMENTS_STORAGE_KEY = "unlocked-achievements";
@@ -35,7 +35,7 @@ namespace EssentialToolkit.Achievements
 # endif
         }
 
-        public static AchievementsService CreateInstance(StorageService storageService) {
+        internal static AchievementsService CreateInstance(StorageService storageService) {
             var instance = new AchievementsService(storageService);
 
             AssignInstance(instance);

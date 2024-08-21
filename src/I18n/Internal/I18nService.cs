@@ -6,8 +6,8 @@ using System.Text.RegularExpressions;
 
 namespace EssentialToolkit.I18n
 {
-    public delegate void OnLanguageChange();
-    public class I18nService
+    internal delegate void OnLanguageChange();
+    internal class I18nService
     {
 
         #region Language state

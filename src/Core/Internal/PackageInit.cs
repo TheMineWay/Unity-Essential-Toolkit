@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace EssentialToolkit.Core
 {
-    public class PackageInit
+    internal class PackageInit
     {
         [RuntimeInitializeOnLoadMethod]
         private static void LogPackageInfo()

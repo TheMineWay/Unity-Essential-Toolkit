@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace EssentialToolkit.I18n
 {
-    public class I18nTextSubscriptionsHandler
+    internal class I18nTextSubscriptionsHandler
     {
         private List<I18nText> _i18nTexts = new();
 

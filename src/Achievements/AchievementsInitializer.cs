@@ -10,16 +10,14 @@ namespace EssentialToolkit.Achievements
     public class AchievementsInitializer : AInitializer
     {
         // Initialized achievements
-        private static readonly Dictionary<Achievements, Achievement> achievements = new();
+        private static Dictionary<Achievements, Achievement> achievements = new();
         public static Achievement GetAchievement(Achievements achievement) => achievements[achievement];
 
         [SerializeField]
         [Header("Storage service name")]
         private string _storageName = "achievements";
 
-        [SerializeField]
-        [Header("Achievements list")]
-        private Achievement[] _achievements;
+        private IAchievementProvider _achievementProvider;
 
 #if UNITY_EDITOR
         // Initialization count
@@ -33,13 +31,15 @@ namespace EssentialToolkit.Achievements
 
         private IEnumerator InternalInitialize()
         {
-            yield return new WaitUntil(StorageInitializer.IsInitialized);
+            _achievementProvider = GetComponent<IAchievementProvider>();
 
-            foreach (var achievement in _achievements)
-            {
-                achievements[achievement.GetKey()] = achievement;
-            }
+            yield return new WaitUntil(StorageInitializer.IsInitialized); // <-- Wait for storage to be initialized
+            yield return new WaitUntil(_achievementProvider.IsReady); // <-- Wait for achievements provider to be ready
 
+            // Load achievements in cache
+            achievements = _achievementProvider.GetAchievements();
+
+            // Create achievements instance
             AchievementsService.CreateInstance(_storageName);
 
 #if UNITY_EDITOR
@@ -57,37 +57,33 @@ namespace EssentialToolkit.Achievements
     {
         #region Properties
 
-        [SerializeField]
         [Header("Unique achievement identifier")]
-        private Achievements _key;
+        public Achievements key;
 
-        [SerializeField]
         [Header("Translation key")]
-        private string _i18nKey;
+        public string title;
 
-        [SerializeField]
         [Header("Translation key (subtitle). Will not be used if left empty")]
-        private string _subtitleI18nKey = "";
+        public string subtitle = "";
 
-        [SerializeField]
         [Header("Achievement icon")]
-        private Sprite _image;
+        public Sprite image;
 
         #endregion
 
         #region Getters
 
-        public Achievements GetKey() => _key;
-        public string GetI18nKey() => _i18nKey;
-        public string GetSubtitleI18nKey() => _subtitleI18nKey;
-        public Sprite GetImage() => _image;
+        public Achievements GetKey() => key;
+        public string GetTitle() => title;
+        public string GetSubtitle() => subtitle;
+        public Sprite GetImage() => image;
 
         #endregion
 
         #region Checkers
 
-        public bool HasSubtitleI18nKey() => _subtitleI18nKey.Trim() != "";
-        public bool HasImage() => _image != null;
+        public bool HasSubtitle() => subtitle.Trim() != "";
+        public bool HasImage() => image != null;
 
         #endregion
     }

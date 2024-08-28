@@ -1,27 +1,43 @@
 using EssentialToolkit.Core;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace EssentialToolkit.Achievements
 {
     [System.Serializable]
-    internal class SimpleAchievementDictionaryBuilder : ADictionaryBuilder<SimpleAchievement> { }
+    internal class SimpleAchievementDictionaryBuilder : ADictionaryBuilder<Achievements, SimpleAchievement> { }
     public class SimpleAchievementProvider : MonoBehaviour, IAchievementProvider
     {
         [SerializeField]
         private SimpleAchievementDictionaryBuilder[] _achievements;
 
-        bool IAchievementProvider.IsReady()
+        Dictionary<Achievements, Achievement> IAchievementProvider.GetAchievements()
         {
-            return false;
+            var dict = new Dictionary<Achievements, Achievement>();
+
+            foreach (var item in _achievements)
+            {
+                var val = item.GetValue();
+
+                // Create the standard Achievement Object
+                dict[item.GetKey()] = new Achievement {
+                    key = item.GetKey(),
+
+                    title = val.title,
+                    subtitle = val.subtitle,
+                    image = val.icon,
+                };
+            }
+
+            return dict;
         }
+
+        bool IAchievementProvider.IsReady() => true;
     }
 
     [System.Serializable]
     internal class SimpleAchievement
     {
-        [Header("Achievement unique key")]
-        public Achievements key;
-
         [Header("Title")]
         public string title;
 

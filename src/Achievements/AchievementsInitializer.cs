@@ -1,4 +1,5 @@
 using EssentialToolkit.Core;
+using EssentialToolkit.I18n;
 using EssentialToolkit.Storage;
 using System;
 using System.Collections;
@@ -22,8 +23,9 @@ namespace EssentialToolkit.Achievements
 #if UNITY_EDITOR
         // Initialization count
         private static int _timesInitializated = 0;
-# endif
+#endif
 
+        #region Initialization
         public override void Initialize()
         {
             StartCoroutine(InternalInitialize());
@@ -36,8 +38,10 @@ namespace EssentialToolkit.Achievements
             yield return new WaitUntil(StorageInitializer.IsInitialized); // <-- Wait for storage to be initialized
             yield return new WaitUntil(_achievementProvider.IsReady); // <-- Wait for achievements provider to be ready
 
-            // Load achievements in cache
-            achievements = _achievementProvider.GetAchievements();
+            LoadCache();
+
+            // Subscribe to language change delegate
+            I18nService.onLanguageChange += LoadCache;
 
             // Create achievements instance
             AchievementsService.CreateInstance(_storageName);
@@ -50,6 +54,23 @@ namespace EssentialToolkit.Achievements
             _timesInitializated += 1;
 # endif
         }
+
+        private void OnDestroy()
+        {
+            I18nService.onLanguageChange -= LoadCache;
+        }
+
+        #endregion
+
+        #region Internal utils
+
+        private void LoadCache()
+        {
+            // Load achievements in cache
+            achievements = _achievementProvider.GetAchievements();
+        }
+
+        #endregion
     }
 
     [Serializable]

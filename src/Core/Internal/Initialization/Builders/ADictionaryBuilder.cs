@@ -6,27 +6,27 @@ using UnityEngine;
 namespace EssentialToolkit.Core
 {
     [Serializable]
-    public abstract class ADictionaryBuilder<T>
+    public abstract class ADictionaryBuilder<K, V>
     {
         [SerializeField]
-        private string key;
+        private K key;
 
         [SerializeField]
-        private T value;
+        private V value;
 
-        public string GetKey() => key;
-        public T GetValue() => value;
+        public K GetKey() => key;
+        public V GetValue() => value;
 
-        public static Dictionary<string, T> ToDictionary(ADictionaryBuilder<T>[] list)
+        public static Dictionary<K, V> ToDictionary(ADictionaryBuilder<K, V>[] list)
         {
-            var dict = new Dictionary<string, T>();
+            var dict = new Dictionary<K, V>();
 
             foreach (var item in list) dict[item.GetKey()] = item.GetValue();
 
             return dict;
         }
 
-        public static Dictionary<string, T> Merge(ADictionaryBuilder<T>[] dbuilder, Dictionary<string, T> other) {
+        public static Dictionary<K, V> Merge(ADictionaryBuilder<K, V>[] dbuilder, Dictionary<K, V> other) {
             return other.Concat(ToDictionary(dbuilder)).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
     }

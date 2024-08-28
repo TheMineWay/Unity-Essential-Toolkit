@@ -4,5 +4,5 @@ using UnityEngine.Events;
 namespace EssentialToolkit.Core
 {
     [Serializable]
-    public class UnityEventDictionaryBuilder : ADictionaryBuilder<UnityEvent> { }
+    public class UnityEventDictionaryBuilder : ADictionaryBuilder<string, UnityEvent> { }
 }

@@ -63,3 +63,25 @@ You are not supposed to initialize achievements more than once for a single game
 Also, do not attach more than one achievements provider to the `AchievementsInitializer`'s GameObject. Ignoring this statement could lead your game to unexpected behaviours.
 
 :::
+
+## Unlock an achievement
+
+Now that achievements are setup, you can start using the Achievements API to unlock achievements 🎖️. In your code, run:
+
+```csharp
+// Get the achievements instance
+var achievementsInstance = AchievementsService.GetInstance();
+
+// Unlock an achievement
+achievementsInstance.UnlockAchievement(Achievements.EXAMPLE_1);
+```
+
+Once this code is executed, if the achievement has not been unlocked yet, it will be unlocked. This means that in the achievements Storage service (in the documentation example it is named _achievements_) the unlockment will be registered so the achievement cannot be unlocked again. Also some events should have been invoked (you will learn about them later).
+
+If you did not setup anything else you should not have seen anything on the game's UI. This is because we did not configure a UI for the achievement (to show the achievement name, subtitle and icon). We will learn about this in the next section.
+
+:::info About achievements memory
+
+Achievements data is stored in the configured Storage service. This data will be persisted while the Storage service data is stored. For example: if the configured Storage service is the _InMemoryStorageService_, achievements data will be lost when the game is closed (as this service does not provide a persistent storage). Otherwise, the _PlayerPrefsStorageService_ will persist data between game sessions.
+
+:::

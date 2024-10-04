@@ -23,7 +23,9 @@ jobs:
 
       # Install dependencies
       - name: 📦 Install dependencies
-        run: npm ci
+        run: |
+          cd docs
+          npm ci
 
       # Build the documentation
       - name: 🔨 Build documentation

@@ -3,7 +3,7 @@ import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
 
 const config: Config = {
-  title: "Unity Essential Toolkit",
+  title: "Should fail",
   tagline: "Build games, faster, easier and better",
   favicon: "img/favicon.ico",
 

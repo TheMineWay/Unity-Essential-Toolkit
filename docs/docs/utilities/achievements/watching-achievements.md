@@ -13,3 +13,9 @@ This script allows you to watch a specific achievement. You only need to attach 
 You will see a list of events in the Inspector. They will be called when the achievement receives changes. See the list below.
 
 - **OnUnlock:** called when the achievement is unlocked.
+
+## Using the AchievementsWatcher
+
+This script allows you to listen to achievements events. You ned to attach the `AchievementsWatcher` script to a GameObject. Once this is done, you will be able to use the events shown in the Inspector. See the list below.
+
+- **OnUnlock:** called when any achievement is unlocked. It provides the Achievement code on the event method.

@@ -60,15 +60,19 @@ The script also provides you with some `UnityEvent`'s:
 
 ## Using the AchievementSceneObject {#using-achievements-scene-object}
 
-This script manages events for a specific achievement at each time. You can have multiple instances of this script per scene (even for the same event).
-When attached to a GameObject you are able to select the event you want to work with. This is done by selecting the achievement on the **Achievement** field.
+This script allows you to perform actions to a specific event easily (like unlocking it). It also has events that get called when some actions are performed.
+When attached to a GameObject you are able to select the achievement you want to work with. This is done by selecting the achievement on the **Achievement** field.
 
-Once you selected the right achievement, you can use the events shown in the Unity's Inspector. See the list below.
+### Unlocking achievements
+
+This script has a public method named `UnlockAchievement`. When called, it will unlock the achievement.
+
+### Events
+
+You have some events in the Unity's Inspector. See the list below.
 
 - **OnUnlocked:** called when the achievement is unlocked for the first time.
 - **OnUnlockCall:** called when the achievement unlock is called. It gets called even if the achievement was previously unlocked.
 - **BeforeUnlockCall**: called when the achievement unlock is called, but before triggering the unlockment process. It gets called even if the achievement was previously unlocked.
 
-### Unlocking achievements
-
-This script has a public method named `UnlockAchievement`. When called, it will unlock the achievement.
+Those events are only called when actions happen via this script. This means that if, for example, an achievement is unlocked from another script, this events will not be called.

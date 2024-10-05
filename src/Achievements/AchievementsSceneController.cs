@@ -12,10 +12,10 @@ namespace EssentialToolkit.Achievements
         #region Properties
 
         [SerializeField]
-        private I18nText _title;
+        private TextObject _title;
 
         [SerializeField]
-        private I18nText _subtitle;
+        private TextObject _subtitle;
 
         [SerializeField]
         private Image _image;
@@ -51,8 +51,8 @@ namespace EssentialToolkit.Achievements
             var _achievement = AchievementsInitializer.GetAchievement(achievement);
 
             // Update fields
-            _title.SetKey(_achievement.GetI18nKey());
-            if (_subtitle != null && _achievement.HasSubtitleI18nKey()) _subtitle.SetKey(_achievement.GetSubtitleI18nKey());
+            _title.SetText(_achievement.GetTitle());
+            if (_subtitle != null && _achievement.HasSubtitle()) _subtitle.SetText(_achievement.GetSubtitle());
             if (_image != null && _achievement.HasImage()) _image.sprite = _achievement.GetImage();
         }
 

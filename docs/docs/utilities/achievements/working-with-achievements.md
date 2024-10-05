@@ -68,3 +68,7 @@ Once you selected the right achievement, you can use the events shown in the Uni
 - **OnUnlocked:** called when the achievement is unlocked for the first time.
 - **OnUnlockCall:** called when the achievement unlock is called. It gets called even if the achievement was previously unlocked.
 - **BeforeUnlockCall**: called when the achievement unlock is called, but before triggering the unlockment process. It gets called even if the achievement was previously unlocked.
+
+### Unlocking achievements
+
+This script has a public method named `UnlockAchievement`. When called, it will unlock the achievement.

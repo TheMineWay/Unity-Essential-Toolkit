@@ -52,6 +52,12 @@ You are able to provide a Unity's `Animator` instance to the scene controller. T
     </tbody>
 </table>
 
+Example of usage:
+
+![Example of the animator](./assets/achievements-scene-controller-animator-example.png)
+
+The transition between _idle_ and _shown_ (_idle_ -> _shown_) is triggered when the _unlock_ trigger is called. The trigger needs to be called _unlock_ as it is called from the managed script.
+
 ### Events
 
 The script also provides you with some `UnityEvent`'s:

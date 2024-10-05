@@ -1,5 +1,6 @@
-[![Deploy to GitHub Pages](https://github.com/TheMineWay/Unity-Essential-Toolkit/actions/workflows/deploy.yml/badge.svg)](https://github.com/TheMineWay/Unity-Essential-Toolkit/actions/workflows/deploy.yml)
-[![pages-build-deployment](https://github.com/TheMineWay/Unity-Essential-Toolkit/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/TheMineWay/Unity-Essential-Toolkit/actions/workflows/pages/pages-build-deployment)
+[![💻 GitHub Pages](https://github.com/TheMineWay/Unity-Essential-Toolkit/actions/workflows/deploy.yml/badge.svg)](https://github.com/TheMineWay/Unity-Essential-Toolkit/actions/workflows/deploy.yml)
+[![🔨 Build](https://github.com/TheMineWay/Unity-Essential-Toolkit/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/TheMineWay/Unity-Essential-Toolkit/actions/workflows/pages/pages-build-deployment)
+[![🗒️ e2e Tests](https://github.com/TheMineWay/Unity-Essential-Toolkit/actions/workflows/playwright.yml/badge.svg)](https://github.com/TheMineWay/Unity-Essential-Toolkit/actions/workflows/playwright.yml)
 
 # Unity Essential Toolkit
 

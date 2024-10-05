@@ -56,6 +56,15 @@ You are able to provide a Unity's `Animator` instance to the scene controller. T
 
 The script also provides you with some `UnityEvent`'s:
 
-- **onAchievementUnlocked:** called whenever any achievement is unlocked. It provides the unlocked achievement code when called.
+- **OnAchievementUnlocked:** called whenever any achievement is unlocked. It provides the unlocked achievement code when called.
 
 ## Using the AchievementSceneObject {#using-achievements-scene-object}
+
+This script manages events for a specific achievement at each time. You can have multiple instances of this script per scene (even for the same event).
+When attached to a GameObject you are able to select the event you want to work with. This is done by selecting the achievement on the **Achievement** field.
+
+Once you selected the right achievement, you can use the events shown in the Unity's Inspector. See the list below.
+
+- **OnUnlocked:** called when the achievement is unlocked for the first time.
+- **OnUnlockCall:** called when the achievement unlock is called. It gets called even if the achievement was previously unlocked.
+- **BeforeUnlockCall**: called when the achievement unlock is called, but before triggering the unlockment process. It gets called even if the achievement was previously unlocked.

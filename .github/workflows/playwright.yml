@@ -17,6 +17,20 @@ jobs:
         run: |
           cd docs
           npm ci
+      - name: 🔨 Build Docusaurus
+        run: |
+          cd docs  
+          npm run build
+        env:
+          CI: true
+      - name: 🔄️ Start Docusaurus server
+        run: |
+          cd docs
+          npm run serve
+        env:
+          NODE_ENV: development
+      - name: 🕑 Wait
+        run: sleep 5
       - name: 💻 Install Playwright Browsers
         run: |
           cd docs

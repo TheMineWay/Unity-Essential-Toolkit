@@ -17,6 +17,20 @@ jobs:
         run: |
           cd docs
           npm ci
+      - name: 🔨 Build Docusaurus
+        run: |
+          cd docs  
+          npm run build
+        env:
+          CI: true
+      - name: 🔄️ Start Docusaurus server
+        run: |
+          cd docs
+          npm run serve
+        env:
+          NODE_ENV: development
+      - name: 🕑 Wait
+        run: sleep 5
       - name: 💻 Install Playwright Browsers
         run: |
           cd docs
@@ -31,3 +45,49 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+
+
+
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Check out the PR branch
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js environment
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  # Adjust Node version to your needs
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # Step 4: Build Docusaurus
+      - name: Build Docusaurus
+        run: npm run build
+        env:
+          CI: true
+
+      # Step 5: Start Docusaurus server for testing
+      - name: Start Docusaurus server
+        run: npm run serve &
+        env:
+          NODE_ENV: production
+        # Wait a bit for the server to start
+        run: sleep 5
+
+      # Step 6: Run Playwright tests
+      - name: Run Playwright tests
+        run: npm run test:playwright  # Assuming this is the script for Playwright tests
+
+      # Optional: Upload test results (if needed)
+      - name: Upload Playwright Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-results
+          path: test-results/

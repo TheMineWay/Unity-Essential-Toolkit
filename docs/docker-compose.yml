@@ -1,0 +1,17 @@
+version: '3'
+name: documentation
+services:
+  server:
+    container_name: documentation
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    ports:
+      - '${PORT}:${PORT}'
+    expose:
+      - '${PORT}'
+    tty: true

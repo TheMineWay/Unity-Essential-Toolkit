@@ -112,8 +112,8 @@ As you can see the i18n utility will be able to find translations across languag
 
 As you have seen, this utility can handle multiple languages and translation files per language. Two enums are used to declare available languages and translation files. You can modify both of them to add or remove values:
 
-- Languages: **package-folder**/Core/Languages.cs
-- Translations: **package-folder**/I18n/TranslationSets.cs
+- Languages: **package-folder**/Modifiable/Core/Languages.cs
+- Translations: **package-folder**/Modifiable/I18n/TranslationSets.cs
 
 Those files can be modified at any time. If you remove or rename values remember that you might have references in the project.
 

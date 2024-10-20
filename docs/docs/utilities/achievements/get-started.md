@@ -29,7 +29,7 @@ As you might expect, you need to define all available achievements beforehand.
 
 ### Define achievements
 
-Achievement codes are defined in an **enum** in the file `Achievements`. You need to modify this file whenever you want to define new achievements.
+Achievement codes are defined in an **enum** in the file `Achievements` (**package-folder**/Modifiable/Achievements/Achievements.cs). You need to modify this file whenever you want to define new achievements.
 
 ### Provide achievements
 

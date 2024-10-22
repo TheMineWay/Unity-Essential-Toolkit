@@ -13,7 +13,7 @@ namespace EssentialToolkit.Storage
         public virtual void Write(string key, float value) => Write(key, value.ToString());
         public virtual void Write(string key, bool value) => Write(key, value.ToString());
 
-        public void WriteObject<T>(string key, T obj) where T : class => Write(key, JsonConvert.SerializeObject(obj, Formatting.None));
+        public virtual void WriteObject<T>(string key, T obj) where T : class => Write(key, JsonConvert.SerializeObject(obj, Formatting.None));
 
         // Read
         public abstract string ReadString(string key);

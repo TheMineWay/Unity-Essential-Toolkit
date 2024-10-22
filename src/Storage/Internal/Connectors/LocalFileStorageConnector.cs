@@ -36,12 +36,7 @@ namespace EssentialToolkit.Storage
                 // Return the value associated with the key as a string
                 return value.ToString();
             }
-            else
-            {
-                // If the key doesn't exist, return an empty string or handle it as needed
-                Debug.LogWarning($"Key '{key}' not found in the JSON file.");
-                return string.Empty;
-            }
+            else return null;
         }
 
         private void WriteToFile(string key, string value)

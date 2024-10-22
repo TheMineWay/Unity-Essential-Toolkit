@@ -4,7 +4,7 @@ namespace EssentialToolkit.Storage
 {
     /**
      * In-memory storage.
-     * State is only conserved while tha game is running
+     * State is only conserved while the game is running
      */
     public class InMemoryStorageConnector : AStorageConnector
     {
@@ -22,7 +22,7 @@ namespace EssentialToolkit.Storage
         public override void Clear(string key) => mem.Remove(key);
 
         // Metadata
-        public  override bool HasKey(string key) => false;
+        public  override bool HasKey(string key) => mem.ContainsKey(key);
 
         #endregion
     }

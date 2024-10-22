@@ -14,14 +14,17 @@ namespace EssentialToolkit.Storage
 
         // Read
         public string ReadString(string key);
-        public int ReadInt(string key);
-        public float ReadFloat(string key);
-        public bool ReadBool(string key);
+        public int? ReadInt(string key);
+        public float? ReadFloat(string key);
+        public bool? ReadBool(string key);
 
         public T ReadObject<T>(string key) where T : class;
 
         // Clear
         public void Clear(string key);
+
+        // Metadata
+        public bool HasKey(string key);
 
         #endregion
     }

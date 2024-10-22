@@ -30,9 +30,9 @@ namespace EssentialToolkit.Storage
 
         // Read
         public string ReadString(string key) => _storageConnector.ReadString(GenerateKey(key));
-        public int ReadInt(string key) => _storageConnector.ReadInt(GenerateKey(key));
-        public float ReadFloat(string key) => _storageConnector.ReadFloat(GenerateKey(key));
-        public bool ReadBool(string key) => _storageConnector.ReadBool(GenerateKey(key));
+        public int? ReadInt(string key) => _storageConnector.ReadInt(GenerateKey(key));
+        public float? ReadFloat(string key) => _storageConnector.ReadFloat(GenerateKey(key));
+        public bool? ReadBool(string key) => _storageConnector.ReadBool(GenerateKey(key));
 
         public T ReadObject<T>(string key, bool clearOnError = true, T fallback = null) where T : class
         {

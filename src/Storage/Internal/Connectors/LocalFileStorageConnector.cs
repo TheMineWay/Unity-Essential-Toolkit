@@ -84,13 +84,16 @@ namespace EssentialToolkit.Storage
 
         // Read
         public string ReadString(string key) => ReadFromFile(key);
-        public int ReadInt(string key) => ParseInt(ReadString(key));
-        public float ReadFloat(string key) => ParseFloat(ReadString(key));
-        public bool ReadBool(string key) => ParseBool(ReadString(key));
+        public int? ReadInt(string key) => ParseInt(ReadString(key));
+        public float? ReadFloat(string key) => ParseFloat(ReadString(key));
+        public bool? ReadBool(string key) => ParseBool(ReadString(key));
         public T ReadObject<T>(string key) where T : class => ParseJSON<T>(ReadString(key));
 
         // Clear
         public void Clear(string key) => PlayerPrefs.DeleteKey(key);
+
+        // Metadata
+        public bool HasKey(string key) => false;
 
         #endregion
 

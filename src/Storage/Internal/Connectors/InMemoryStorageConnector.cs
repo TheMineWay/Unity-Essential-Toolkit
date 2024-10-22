@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace EssentialToolkit.Storage
@@ -21,14 +22,23 @@ namespace EssentialToolkit.Storage
         public void WriteObject<T>(string key, T value) where T : class => Write(key, JsonConvert.SerializeObject(value, Formatting.None));
 
         // Read
-        public string ReadString(string key) => mem[key];
-        public int ReadInt(string key) => ParseInt(ReadString(key));
-        public float ReadFloat(string key) => ParseFloat(ReadString(key));
-        public bool ReadBool(string key) => ParseBool(ReadString(key));
-        public T ReadObject<T>(string key) where T : class => ParseJSON<T>(ReadString(key));
+        public string ReadString(string key) => HasKey(key) ? mem[key] : null;
+        public int? ReadInt(string key) => NullableKey((v) => ParseInt(v), key);
+        public float? ReadFloat(string key) => NullableKey((v) => ParseFloat(v), key);
+        public bool? ReadBool(string key) => NullableKey((v) => ParseBool(v), key);
+        public T ReadObject<T>(string key) where T : class
+        {
+            string value = ReadString(key);
+            if (value == null) return null;
+
+            return ParseJSON<T>(value);
+        }
 
         // Clear
         public void Clear(string key) => mem.Remove(key);
+
+        // Metadata
+        public bool HasKey(string key) => false;
 
         #endregion
 
@@ -39,6 +49,14 @@ namespace EssentialToolkit.Storage
         private bool ParseBool(string value) => value == "true";
         private T ParseJSON<T>(string value) => JsonConvert.DeserializeObject<T>(value);
 
+        #endregion
+
+        #region Utils
+        public T? NullableKey<T>(Func<string, T> action, string key) where T : struct
+        {
+            if (!HasKey(key)) return null;
+            return action(ReadString(key));
+        }
         #endregion
     }
 }

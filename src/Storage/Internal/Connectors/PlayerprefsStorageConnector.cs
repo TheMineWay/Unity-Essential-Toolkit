@@ -15,14 +15,17 @@ namespace EssentialToolkit.Storage
         public void WriteObject<T>(string key, T value) where T : class => Write(key, JsonConvert.SerializeObject(value, Formatting.None));
 
         // Read
-        public string ReadString(string key) => PlayerPrefs.GetString(key);
-        public int ReadInt(string key) => ParseInt(ReadString(key));
-        public float ReadFloat(string key) => ParseFloat(ReadString(key));
-        public bool ReadBool(string key) => ParseBool(ReadString(key));
+        public string ReadString(string key) => HasKey(key) ? PlayerPrefs.GetString(key) : null;
+        public int? ReadInt(string key) => ParseInt(ReadString(key));
+        public float? ReadFloat(string key) => ParseFloat(ReadString(key));
+        public bool? ReadBool(string key) => ParseBool(ReadString(key));
         public T ReadObject<T>(string key) where T : class => ParseJSON<T>(ReadString(key));
 
         // Clear
         public void Clear(string key) => PlayerPrefs.DeleteKey(key);
+
+        // Metadata
+        public bool HasKey(string key) => PlayerPrefs.HasKey(key);
 
         #endregion
 

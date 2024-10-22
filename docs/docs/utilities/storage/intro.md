@@ -15,7 +15,7 @@ This package uses a standard I/O interface that allows you to use one single API
 ## Understanding Storage Services
 
 This utility uses what's called a **Storage Service**. A storage service is a class that provides the developer with a standard API to interact with a data storage system (for example PlayerPrefs).
-When a `StorageService` instance is created it can get a `storageConnector` as a constructor parameter. The `storageConnector` needs to be an object that implements the `IStorageConnector` interface. The connector is used internally to interact with the storage system, for example, to be able to interact with `PlayerPrefs`, there is a connector that comes within the package named `PlayerprefsStorageConnector`. This connector translates I/O operations from the `StorageService` to be understood by the `PlayerPrefs` class.
+When a `StorageService` instance is created it can get a `storageConnector` as a constructor parameter. The `storageConnector` needs to be an object that extends the `AStorageConnector` abstract class. The connector is used internally to interact with the storage system, for example, to be able to interact with `PlayerPrefs`, there is a connector that comes within the package named `PlayerprefsStorageConnector`. This connector translates I/O operations from the `StorageService` to be understood by the `PlayerPrefs` class.
 
 Within the package there are some official storage connectors:
 
@@ -23,7 +23,7 @@ Within the package there are some official storage connectors:
 - `InMemoryStorageConnector`: Stores data in memory. Data is lost when the game is closed.
 - `LocalFileStorageConnector`: (refered as JSON file). It stores data in a custom file in the game directory (recommended only for desktop developments).
 
-You can always create your own storage connectors. You can do so by creating a class that implements the `IStorageConnector`.
+You can always create your own storage connectors. You can do so by creating a class that extends the `AStorageConnector` abstract class.
 
 ## Understanding slots
 

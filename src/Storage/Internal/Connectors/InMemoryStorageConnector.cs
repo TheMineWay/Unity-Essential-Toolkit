@@ -8,7 +8,7 @@ namespace EssentialToolkit.Storage
      */
     public class InMemoryStorageConnector : AStorageConnector
     {
-        private Dictionary<string, string> mem = new();
+        private readonly Dictionary<string, string> mem = new();
 
         #region IO
 

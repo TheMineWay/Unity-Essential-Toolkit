@@ -44,7 +44,7 @@ namespace EssentialToolkit.Storage
         [Header("Type of storage")]
         public StorageType storageType;
 
-        public IStorageConnector GetConnector()
+        public AStorageConnector GetConnector()
         {
             switch (storageType)
             {

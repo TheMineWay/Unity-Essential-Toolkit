@@ -6,7 +6,7 @@ namespace EssentialToolkit.Storage
     internal delegate void OnSlotChanged();
     internal class StorageService
     {
-        public StorageService(IStorageConnector storageConnector = null, string slot = null) {
+        public StorageService(AStorageConnector storageConnector = null, string slot = null) {
             if (storageConnector != null) _storageConnector = storageConnector;
 
             this.slot = slot ?? "";
@@ -14,8 +14,8 @@ namespace EssentialToolkit.Storage
 
         #region Connector
 
-        private IStorageConnector _storageConnector = new PlayerprefsStorageConnector();
-        public void SetConnector(IStorageConnector connector) => _storageConnector = connector;
+        private AStorageConnector _storageConnector = new PlayerprefsStorageConnector();
+        public void SetConnector(AStorageConnector connector) => _storageConnector = connector;
 
         #endregion
 

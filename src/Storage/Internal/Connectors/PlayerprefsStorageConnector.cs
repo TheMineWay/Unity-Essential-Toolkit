@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace EssentialToolkit.Storage
@@ -17,15 +18,6 @@ namespace EssentialToolkit.Storage
 
         // Metadata
         public override bool HasKey(string key) => PlayerPrefs.HasKey(key);
-
-        #endregion
-
-        #region Casting
-
-        private int ParseInt(string value) => int.Parse(value);
-        private float ParseFloat(string value) => float.Parse(value);
-        private bool ParseBool(string value) => value == "true";
-        private T ParseJSON<T>(string value) => JsonConvert.DeserializeObject<T>(value);
 
         #endregion
     }

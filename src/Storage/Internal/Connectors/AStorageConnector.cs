@@ -5,6 +5,15 @@ namespace EssentialToolkit.Storage
 {
     public abstract class AStorageConnector
     {
+        private string slot;
+        protected AStorageConnector() {
+            slot = StorageService.GetCurrentSlot();
+            StorageService.onSlotChanged += UpdateSlot;
+        }
+        ~AStorageConnector() => StorageService.onSlotChanged -= UpdateSlot;
+
+        private void UpdateSlot(string slot) => this.slot = slot;
+
         #region IO
 
         // Write
@@ -33,6 +42,12 @@ namespace EssentialToolkit.Storage
 
         // Metadata
         public abstract bool HasKey(string key);
+
+        #endregion
+
+        #region Slot
+
+        public string GetSlot() => this.slot;
 
         #endregion
 

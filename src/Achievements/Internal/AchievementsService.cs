@@ -59,11 +59,14 @@ namespace EssentialToolkit.Achievements
             this.storageService = storageService;
 
             // Setup slot listener
-            StorageService.onSlotChanged += LoadGivenAchievements;
+            StorageService.onSlotChanged += OnSlotChanged;
 
             // Initial load
             LoadGivenAchievements();
         }
+        ~AchievementsService() => StorageService.onSlotChanged -= OnSlotChanged;
+
+        private void OnSlotChanged(string slot) => LoadGivenAchievements();
 
         #endregion
 

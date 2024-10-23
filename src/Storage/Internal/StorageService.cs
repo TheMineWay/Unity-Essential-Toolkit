@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace EssentialToolkit.Storage
 {
-    internal delegate void OnSlotChanged();
+    internal delegate void OnSlotChanged(string slot);
     internal class StorageService
     {
         public StorageService(AStorageConnector storageConnector = null, string slot = null) {
@@ -22,23 +22,23 @@ namespace EssentialToolkit.Storage
         #region IO
 
         // Write
-        public void Write(string key, string value) => _storageConnector.Write(GenerateKey(key), value);
-        public void Write(string key, int value) => _storageConnector.Write(GenerateKey(key), value);
-        public void Write(string key, float value) => _storageConnector.Write(GenerateKey(key), value);
-        public void Write(string key, bool value) => _storageConnector.Write(GenerateKey(key), value);
-        public void WriteObject<T>(string key, T value) where T : class => _storageConnector.WriteObject(GenerateKey(key), value);
+        public void Write(string key, string value) => _storageConnector.Write(key, value);
+        public void Write(string key, int value) => _storageConnector.Write(key, value);
+        public void Write(string key, float value) => _storageConnector.Write(key, value);
+        public void Write(string key, bool value) => _storageConnector.Write(key, value);
+        public void WriteObject<T>(string key, T value) where T : class => _storageConnector.WriteObject(key, value);
 
         // Read
-        public string ReadString(string key) => _storageConnector.ReadString(GenerateKey(key));
-        public int? ReadInt(string key) => _storageConnector.ReadInt(GenerateKey(key));
-        public float? ReadFloat(string key) => _storageConnector.ReadFloat(GenerateKey(key));
-        public bool? ReadBool(string key) => _storageConnector.ReadBool(GenerateKey(key));
+        public string ReadString(string key) => _storageConnector.ReadString(key);
+        public int? ReadInt(string key) => _storageConnector.ReadInt(key);
+        public float? ReadFloat(string key) => _storageConnector.ReadFloat(key);
+        public bool? ReadBool(string key) => _storageConnector.ReadBool(key);
 
         public T ReadObject<T>(string key, bool clearOnError = true, T fallback = null) where T : class
         {
             try
             {
-                var value = _storageConnector.ReadObject<T>(GenerateKey(key));
+                var value = _storageConnector.ReadObject<T>(key);
 
                 if (value == null) return fallback;
                 return value;
@@ -59,13 +59,7 @@ namespace EssentialToolkit.Storage
 
         // Clear
 
-        public void Clear(string key) => _storageConnector.Clear(GenerateKey(key));
-
-        #endregion
-
-        #region Utils
-
-        private string GenerateKey(string key) => $"{slot}::${key}";
+        public void Clear(string key) => _storageConnector.Clear(key);
 
         #endregion
 
@@ -98,7 +92,7 @@ namespace EssentialToolkit.Storage
                 foreach (var service in GetServices()) service.SetSlot(slot);
             }
 
-            onSlotChanged.Invoke();
+            onSlotChanged.Invoke(slot);
         }
         public static string GetCurrentSlot() => currentSlot;
 

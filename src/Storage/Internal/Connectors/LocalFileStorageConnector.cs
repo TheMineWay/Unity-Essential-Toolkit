@@ -6,11 +6,11 @@ namespace EssentialToolkit.Storage
 {
     public class LocalFileStorageConnector : AStorageConnector
     {
-        private const string FILE_NAME = "UET-data-file.json";
+        private const string BASE_FILE_NAME = "UET-data-file_";
 
         #region Utils
 
-        private string GetFilePath() => Path.Combine(Application.dataPath, FILE_NAME);
+        private string GetFilePath() => Path.Combine(Application.dataPath, BASE_FILE_NAME + GetSlot() + ".json");
         private string ReadFromFile(string key)
         {
             // Get the path to the file in the current Unity game directory

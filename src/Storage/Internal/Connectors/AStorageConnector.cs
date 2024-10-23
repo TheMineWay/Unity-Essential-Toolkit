@@ -57,6 +57,7 @@ namespace EssentialToolkit.Storage
         #region Migrations
 
         public abstract string Export();
+        public void Export<T>() where T : class => JsonConvert.DeserializeObject(Export());
         public abstract void Import(string value);
         public void Import<T>(T value) where T : class => Import(JsonConvert.SerializeObject(value));
 

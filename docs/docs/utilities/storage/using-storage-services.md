@@ -79,7 +79,7 @@ float decimalData = service.ReadFloat("your-data-key"); // Reading a float value
 bool booleanData = service.ReadBool("your-data-key"); // Reading a boolean value
 ```
 
-Also, you can store class instances using the `WriteObject` method.
+Also, you can read class instances using the `ReadObject` method.
 
 Example:
 

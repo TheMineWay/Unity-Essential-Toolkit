@@ -6,7 +6,8 @@ using UnityEngine;
 namespace EssentialToolkit.Storage
 {
     public class PlayerprefsStorageConnector : AStorageConnector {
-        private string GetPathName() => "__UET-stg-s_" + GetSlot();
+        public PlayerprefsStorageConnector(string serviceName) : base(serviceName) { }
+        private string GetPathName() => "__UET-stg-s_" + serviceName + "__" + GetSlot();
         private Dictionary<string, string> InternalRead()
         {
             var name = GetPathName();

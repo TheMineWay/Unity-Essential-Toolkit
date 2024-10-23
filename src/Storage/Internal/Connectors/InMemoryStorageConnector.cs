@@ -10,14 +10,18 @@ namespace EssentialToolkit.Storage
      */
     public class InMemoryStorageConnector : AStorageConnector
     {
-        private readonly Dictionary<string, Dictionary<string, string>> mem = new();
+        private readonly Dictionary<string, Dictionary<string, Dictionary<string, string>>> mem = new();
         private Dictionary<string, string> GetSlotDict()
         {
             var slot = GetSlot();
-            if (!mem.ContainsKey(slot)) mem[slot] = new();
-            return mem[slot];
+            if (!mem.ContainsKey(serviceName)) mem[serviceName] = new();
+            if (!mem[slot].ContainsKey(slot)) mem[serviceName][slot] = new();
+
+            return mem[serviceName][slot];
 
         }
+
+        public InMemoryStorageConnector(string serviceName) : base(serviceName) { }
 
         #region IO
 

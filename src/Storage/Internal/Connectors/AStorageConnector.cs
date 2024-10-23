@@ -1,13 +1,15 @@
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 
 namespace EssentialToolkit.Storage
 {
     public abstract class AStorageConnector
     {
         private string slot;
-        protected AStorageConnector() {
+        protected readonly string serviceName;
+        protected AStorageConnector(string serviceName) {
+            this.serviceName = serviceName;
+
             slot = StorageService.GetCurrentSlot();
             StorageService.onSlotChanged += UpdateSlot;
         }

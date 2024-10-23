@@ -14,7 +14,7 @@ namespace EssentialToolkit.Storage
 
         #region Connector
 
-        private AStorageConnector _storageConnector = new PlayerprefsStorageConnector();
+        private AStorageConnector _storageConnector = new PlayerprefsStorageConnector("default");
         public void SetConnector(AStorageConnector connector) => _storageConnector = connector;
 
         #endregion

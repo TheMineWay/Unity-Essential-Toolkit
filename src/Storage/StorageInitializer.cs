@@ -48,9 +48,9 @@ namespace EssentialToolkit.Storage
         {
             switch (storageType)
             {
-                case StorageType.PLAYERPREFS: return new PlayerprefsStorageConnector();
-                case StorageType.IN_MEMORY: return new InMemoryStorageConnector();
-                case StorageType.JSON_FILE: return new LocalFileStorageConnector();
+                case StorageType.PLAYERPREFS: return new PlayerprefsStorageConnector(name);
+                case StorageType.IN_MEMORY: return new InMemoryStorageConnector(name);
+                case StorageType.JSON_FILE: return new LocalFileStorageConnector(name);
             }
 
             throw new Exception($"Storage service not found: {storageType}");

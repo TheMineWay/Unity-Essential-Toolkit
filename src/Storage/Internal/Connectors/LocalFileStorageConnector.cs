@@ -9,9 +9,11 @@ namespace EssentialToolkit.Storage
     {
         private const string BASE_FILE_NAME = "UET-data-file_";
 
+        public LocalFileStorageConnector(string serviceName) : base(serviceName) { }
+
         #region Utils
 
-        private string GetFilePath() => Path.Combine(Application.dataPath, BASE_FILE_NAME + GetSlot() + ".json");
+        private string GetFilePath() => Path.Combine(Application.dataPath, BASE_FILE_NAME + serviceName + "__" + GetSlot() + ".json");
         private string ReadFromFile(string key)
         {
             // Get the path to the file in the current Unity game directory
@@ -120,7 +122,7 @@ namespace EssentialToolkit.Storage
             File.WriteAllText(GetFilePath(), value);
         }
 
-        public override string Export() => JsonConvert.SerializeObject(File.ReadAllText(GetFilePath()));
+        public override string Export() => File.ReadAllText(GetFilePath());
 
         #endregion
     }

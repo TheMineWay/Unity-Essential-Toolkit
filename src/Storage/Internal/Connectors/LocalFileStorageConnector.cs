@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using UnityEngine;
@@ -108,6 +109,18 @@ namespace EssentialToolkit.Storage
 
         // Metadata
         public override bool HasKey(string key) => false;
+
+        #endregion
+
+        #region Migrations
+
+        public override void Import(string value)
+        {
+            JToken.Parse(value); // Check if `value` is a valid JSON
+            File.WriteAllText(GetFilePath(), value);
+        }
+
+        public override string Export() => JsonConvert.SerializeObject(File.ReadAllText(GetFilePath()));
 
         #endregion
     }

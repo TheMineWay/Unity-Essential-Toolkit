@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -45,6 +46,18 @@ namespace EssentialToolkit.Storage
 
         // Metadata
         public override bool HasKey(string key) => InternalRead().ContainsKey(key);
+
+        #endregion
+
+        #region Migrations
+
+        public override void Import(string value)
+        {
+            JToken.Parse(value); // Check if `value` is a valid JSON
+            PlayerPrefs.SetString(GetPathName(), value);
+        }
+
+        public override string Export() => PlayerPrefs.GetString(GetPathName());
 
         #endregion
     }

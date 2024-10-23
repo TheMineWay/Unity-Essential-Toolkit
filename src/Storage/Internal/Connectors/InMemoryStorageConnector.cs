@@ -1,4 +1,6 @@
+using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace EssentialToolkit.Storage
 {
@@ -30,6 +32,19 @@ namespace EssentialToolkit.Storage
 
         // Metadata
         public  override bool HasKey(string key) => GetSlotDict().ContainsKey(key);
+
+        #endregion
+
+        #region Migrations
+
+        public override void Import(string value)
+        {
+            var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
+            GetSlotDict().Clear();
+            GetSlotDict().Concat(data);
+        }
+
+        public override string Export() => JsonConvert.SerializeObject(GetSlotDict());
 
         #endregion
     }

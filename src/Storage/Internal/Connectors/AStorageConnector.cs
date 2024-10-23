@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace EssentialToolkit.Storage
 {
@@ -48,6 +49,16 @@ namespace EssentialToolkit.Storage
         #region Slot
 
         public string GetSlot() => this.slot;
+
+        #endregion
+
+        #region Migrations
+
+        public abstract string Export();
+        public abstract void Import(string value);
+        public void Import<T>(T value) where T : class => Import(JsonConvert.SerializeObject(value));
+
+        internal void CopyTo(StorageService target) => target.Import(Export());
 
         #endregion
 

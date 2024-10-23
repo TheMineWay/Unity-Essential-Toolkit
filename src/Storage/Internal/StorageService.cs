@@ -63,6 +63,16 @@ namespace EssentialToolkit.Storage
 
         #endregion
 
+        #region Migrations
+
+        public string Export() => _storageConnector.Export();
+        public void Import(string value) => _storageConnector.Import(value);
+        public void Import<T>(T value) where T : class => _storageConnector.Import(value);
+
+        public void CopyTo(StorageService target) => _storageConnector.CopyTo(target);
+
+        # endregion
+
         #region Slot
 
         private string slot;

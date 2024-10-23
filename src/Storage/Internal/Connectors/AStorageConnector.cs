@@ -5,6 +5,18 @@ namespace EssentialToolkit.Storage
 {
     public abstract class AStorageConnector
     {
+        private string slot;
+        protected readonly string serviceName;
+        protected AStorageConnector(string serviceName) {
+            this.serviceName = serviceName;
+
+            slot = StorageService.GetCurrentSlot();
+            StorageService.onSlotChanged += UpdateSlot;
+        }
+        ~AStorageConnector() => StorageService.onSlotChanged -= UpdateSlot;
+
+        private void UpdateSlot(string slot) => this.slot = slot;
+
         #region IO
 
         // Write
@@ -33,6 +45,23 @@ namespace EssentialToolkit.Storage
 
         // Metadata
         public abstract bool HasKey(string key);
+
+        #endregion
+
+        #region Slot
+
+        public string GetSlot() => this.slot;
+
+        #endregion
+
+        #region Migrations
+
+        public abstract string Export();
+        public void Export<T>() where T : class => JsonConvert.DeserializeObject(Export());
+        public abstract void Import(string value);
+        public void Import<T>(T value) where T : class => Import(JsonConvert.SerializeObject(value));
+
+        internal void CopyTo(StorageService target) => target.Import(Export());
 
         #endregion
 

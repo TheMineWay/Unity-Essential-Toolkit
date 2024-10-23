@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using UnityEngine;
@@ -6,11 +7,13 @@ namespace EssentialToolkit.Storage
 {
     public class LocalFileStorageConnector : AStorageConnector
     {
-        private const string FILE_NAME = "UET-data-file.json";
+        private const string BASE_FILE_NAME = "UET-data-file_";
+
+        public LocalFileStorageConnector(string serviceName) : base(serviceName) { }
 
         #region Utils
 
-        private string GetFilePath() => Path.Combine(Application.dataPath, FILE_NAME);
+        private string GetFilePath() => Path.Combine(Application.dataPath, BASE_FILE_NAME + serviceName + "__" + GetSlot() + ".json");
         private string ReadFromFile(string key)
         {
             // Get the path to the file in the current Unity game directory
@@ -108,6 +111,18 @@ namespace EssentialToolkit.Storage
 
         // Metadata
         public override bool HasKey(string key) => false;
+
+        #endregion
+
+        #region Migrations
+
+        public override void Import(string value)
+        {
+            JToken.Parse(value); // Check if `value` is a valid JSON
+            File.WriteAllText(GetFilePath(), value);
+        }
+
+        public override string Export() => File.ReadAllText(GetFilePath());
 
         #endregion
     }

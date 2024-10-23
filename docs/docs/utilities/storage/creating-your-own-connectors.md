@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 5
 ---
 
 # Creating your own connectors
@@ -19,28 +19,44 @@ Extend your connector class with the `AStorageConnector` abstract class. It will
 ```csharp
 public class FancyStorageConnector : AStorageConnector
 {
+    public FancyStorageConnector(string serviceName) : base(serviceName) { }
+
     public override void Write(string key, string value) => /* Write logic */;
     public override string ReadString(string key) => /* Read logic (be aware: you must return null if the value is not present) */;
     public override void Clear(string key) => /* Remove key logic */;
     public override bool HasKey(string key) => /* Keys check logic */;
+    public override void Import(string value) => /* Imports a JSON string */;
+    public override string Export() => /* Exports data as a JSON string */;
 }
 ```
 
-### `InMemoryStorageConnector` as an example
+:::info Keep in mind
+
+When you develop a custom Storage Connector you have to keep in mind that depending on the _serviceName_ and the _slot_ you will need to operate with different data.
+
+See this example (based on the `PlayerprefsStorageConnector.cs`):
 
 ```csharp
-public class InMemoryStorageConnector : AStorageConnector
+public class FancyStorageConnector : AStorageConnector
 {
-    private readonly Dictionary<string, string> mem = new();
+  public FancyStorageConnector(string serviceName) : base(serviceName) { }
 
-    public override void Write(string key, string value) => mem[key] = value;
-    public override string ReadString(string key) => HasKey(key) ? mem[key] : null; // We return null if the key is not present
-    public override void Clear(string key) => mem.Remove(key);
-    public override bool HasKey(string key) => mem.ContainsKey(key);
+  /* ... other overrided methods ... */
+
+  public override void Write(string key, string value) {
+    /* You can access GetSlot and serviceName as they are inherited from AStorageConnector */
+
+    string slot = base.GetSlot();
+
+    string path = base.serviceName + "-" + slot + "-" + key; // We generate the path to the PlayerPrefs item combining the serviceName, slot and the key.
+    PlayerPrefs.SetString(path, JsonConvert.SerializeObject(data));
+  }
+
+  /* ... other overrided methods ... */
 }
 ```
 
-It stores data in a Dictionary and all methods create connections to this dictionary, so we are able to interact with it using connector methods.
+:::
 
 ## 3. Storing different datatypes
 
@@ -78,11 +94,3 @@ If you don't want the class to manage the other datatypes, you can override thos
     </tr>
   </tbody>
 </table>
-
-Currently the list of available datatypes is:
-
-- `string`: simple text value.
-- `int`: simple integer value.
-- `float`: simple decimal value.
-- `bool`: boolean value.
-- `T (custom class)`: JSON data.

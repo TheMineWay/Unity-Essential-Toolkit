@@ -1,6 +1,5 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace EssentialToolkit.Storage
 {
@@ -14,8 +13,8 @@ namespace EssentialToolkit.Storage
         private Dictionary<string, string> GetSlotDict()
         {
             var slot = GetSlot();
-            if (!mem.ContainsKey(serviceName)) mem[serviceName] = new();
-            if (!mem[slot].ContainsKey(slot)) mem[serviceName][slot] = new();
+            if (!mem.ContainsKey(serviceName)) mem.Add(serviceName, new());
+            if (!mem[serviceName].ContainsKey(slot)) mem[serviceName].Add(slot, new());
 
             return mem[serviceName][slot];
 
@@ -43,9 +42,15 @@ namespace EssentialToolkit.Storage
 
         public override void Import(string value)
         {
-            var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
-            GetSlotDict().Clear();
-            GetSlotDict().Concat(data);
+            var newDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
+            var dict = GetSlotDict();
+
+            dict.Clear();
+
+            foreach (var kvp in newDict)
+            {
+                dict[kvp.Key] = kvp.Value;
+            }
         }
 
         public override string Export() => JsonConvert.SerializeObject(GetSlotDict());

@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using EssentialToolkit.Core;
+using System.Linq;
 
 namespace EssentialToolkit.Configuation
 {
@@ -10,44 +11,55 @@ namespace EssentialToolkit.Configuation
 
         [SerializeField]
         [Header("Screen resolution picker")]
-        TMP_Dropdown resolution;
-        private void _InitResolution()
+        TMP_Dropdown resolutionPicker;
+
+        [SerializeField]
+        [Header("Allowed resolution aspect ratios (leave empty to allow all)")]
+        Vector2[] allowedAspectRatios;
+        private void InitResolutionPicker()
         {
-            if (resolution)
+            if (resolutionPicker)
             {
-#if UNITY_WEBGL
-                resolution.interactable = false;
-#else
-                resolution.interactable = true;
+                resolutionPicker.interactable = false;
+#if !(UNITY_WEBGL)
+                resolutionPicker.ClearOptions();
+                // TODO: move options logic to a service/util
+                resolutionPicker.AddOptions((from res in ConfigurationService.GetAvailableScreenResolutions() select new TMP_Dropdown.OptionData($"{res.width} x {res.height}")).ToList());
+
+                resolutionPicker.interactable = true;
 # endif
             }
         }
 
         [SerializeField]
-        [Header("Screen picker")]
-        TMP_Dropdown screenPicker;
-        private void _InitScreenPicker()
+        [Header("Display picker")]
+        TMP_Dropdown displayPicker;
+        private void InitDisplayPicker()
         {
-            if (screenPicker)
+            if (displayPicker)
             {
-#if UNITY_WEBGL
-                screenPicker.interactable = false;
-#else
-                screenPicker.interactable = true;
-# endif
+                displayPicker.interactable = false;
+
+                if (ConfigurationService.SupportsMultipleDisplays())
+                {
+                    displayPicker.ClearOptions();
+                    // TODO: move options logic to a service/util
+                    displayPicker.AddOptions((from d in ConfigurationService.GetAvailableDisplays() select new TMP_Dropdown.OptionData(d.GetName())).ToList());
+
+                    displayPicker.interactable = true;
+                }
             }
         }
 
         [SerializeField]
         [Header("Max FPS")]
         Slider maxFps;
-        private void _InitMaxFps()
+        private void InitMaxFps()
         {
             if (maxFps)
             {
-#if UNITY_WEBGL
                 maxFps.interactable = false;
-#else
+#if !UNITY_WEBGL
                 maxFps.interactable = true;
 # endif
             }
@@ -56,13 +68,12 @@ namespace EssentialToolkit.Configuation
         [SerializeField]
         [Header("Screen mode")]
         TMP_Dropdown screenMode; // Fullscreen, bordered fullscreen, window
-        private void _InitScreenMode()
+        private void InitScreenMode()
         {
             if (screenMode)
             {
-#if UNITY_WEBGL
                 screenMode.interactable = false;
-#else
+#if !UNITY_WEBGL
                 screenMode.interactable = true;
 # endif
             }
@@ -73,10 +84,10 @@ namespace EssentialToolkit.Configuation
         #region Init
 
         private void InitScreen() {
-            _InitResolution();
-            _InitScreenPicker();
-            _InitMaxFps();
-            _InitScreenMode();
+            InitResolutionPicker();
+            InitDisplayPicker();
+            InitMaxFps();
+            InitScreenMode();
         }
 
         #endregion

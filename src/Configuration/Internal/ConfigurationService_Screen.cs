@@ -10,27 +10,32 @@ namespace EssentialToolkit.Configuation
     {
         /* Return available resolutions.
          * Optionally, filter by aspect ratio (example: GetAvailableScreenResolutions(16f / 9f)) */
-        public static Resolution[] GetAvailableScreenResolutions(float? aspectRatio = null)
+        public static Resolution[] GetAvailableScreenResolutions(float[] aspectRatios = null)
         {
             // Use a HashSet to store unique resolutions
-            HashSet<Resolution> uniqueResolutions = new(new ResolutionComparer());
+            HashSet<Resolution> uniqueResolutions = new HashSet<Resolution>(new ResolutionComparer());
 
-            if (aspectRatio.HasValue)
+            if (aspectRatios != null && aspectRatios.Length > 0)
             {
-                // Filter resolutions by aspect ratio (width / height)
+                // Filter resolutions by aspect ratios
                 var filteredResolutions = Screen.resolutions
-                                                 .Where(res => Mathf.Approximately((float)res.width / res.height, aspectRatio.Value));
+                                                 .Where(res => aspectRatios.Any(ar => Mathf.Approximately((float)res.width / res.height, ar)));
 
                 foreach (var res in filteredResolutions) uniqueResolutions.Add(res);
             }
             else
             {
-                // Add all resolutions if no aspect ratio is provided
+                // Add all resolutions if no aspect ratios are provided
                 foreach (var res in Screen.resolutions) uniqueResolutions.Add(res);
             }
 
             // Return the unique resolutions as an array
             return uniqueResolutions.ToArray();
+        }
+        public static Resolution[] GetAvailableScreenResolutions(Vector2[] aspectRatios)
+        {
+            // Convert Vector2 aspect ratios to float array
+            return GetAvailableScreenResolutions(aspectRatios.Select(v => v.x / v.y).ToArray());
         }
 
         public static ManagedDisplay[] GetAvailableDisplays() => (from display in Display.displays select new ManagedDisplay(display)).ToArray();

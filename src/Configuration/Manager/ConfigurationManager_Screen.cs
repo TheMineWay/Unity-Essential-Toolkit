@@ -12,10 +12,6 @@ namespace EssentialToolkit.Configuation
         [SerializeField]
         [Header("Screen resolution picker")]
         TMP_Dropdown resolutionPicker;
-
-        [SerializeField]
-        [Header("Allowed resolution aspect ratios (leave empty to allow all)")]
-        Vector2[] allowedAspectRatios;
         private void InitResolutionPicker()
         {
             if (resolutionPicker)
@@ -24,7 +20,7 @@ namespace EssentialToolkit.Configuation
 #if !(UNITY_WEBGL)
                 resolutionPicker.ClearOptions();
                 // TODO: move options logic to a service/util
-                resolutionPicker.AddOptions((from res in ConfigurationService.GetAvailableScreenResolutions() select new TMP_Dropdown.OptionData($"{res.width} x {res.height}")).ToList());
+                resolutionPicker.AddOptions((from res in ConfigurationService.GetAvailableScreenResolutions(ConfigurationInitializer.Instance.allowedAspectRatios) select new TMP_Dropdown.OptionData($"{res.width} x {res.height}")).ToList());
 
                 resolutionPicker.interactable = true;
 # endif

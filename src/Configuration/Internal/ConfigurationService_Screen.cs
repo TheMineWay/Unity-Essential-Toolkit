@@ -6,14 +6,14 @@ using UnityEngine;
 namespace EssentialToolkit.Configuation
 {
     // Screen related utils
-    public partial class ConfigurationService
+    internal partial class ConfigurationService
     {
         /* Return available resolutions.
          * Optionally, filter by aspect ratio (example: GetAvailableScreenResolutions(16f / 9f)) */
         public static Resolution[] GetAvailableScreenResolutions(float[] aspectRatios = null)
         {
             // Use a HashSet to store unique resolutions
-            HashSet<Resolution> uniqueResolutions = new HashSet<Resolution>(new ResolutionComparer());
+            HashSet<Resolution> uniqueResolutions = new(new ResolutionComparer());
 
             if (aspectRatios != null && aspectRatios.Length > 0)
             {
@@ -23,9 +23,10 @@ namespace EssentialToolkit.Configuation
 
                 foreach (var res in filteredResolutions) uniqueResolutions.Add(res);
             }
-            else
+            
+            if (uniqueResolutions.Count <= 0)
             {
-                // Add all resolutions if no aspect ratios are provided
+                // Add all resolutions if no resolutions are present
                 foreach (var res in Screen.resolutions) uniqueResolutions.Add(res);
             }
 
@@ -52,7 +53,6 @@ namespace EssentialToolkit.Configuation
 
             Application.targetFrameRate = maxFPS.Value;
         }
-
     }
 
     internal class ResolutionComparer : IEqualityComparer<Resolution>

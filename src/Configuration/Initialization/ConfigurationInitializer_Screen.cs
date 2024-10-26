@@ -11,6 +11,7 @@ namespace EssentialToolkit.Configuation
         internal Vector2[] allowedAspectRatios;
 
         [SerializeField]
+        [Header("Enforced screen orientation")]
         internal ScreenOrientation orientation = ScreenOrientation.AutoRotation;
 
         private void InitializeScreen()

@@ -1,8 +1,6 @@
-using EssentialToolkit.Storage;
 using UnityEngine;
 using System;
 using Newtonsoft.Json;
-
 
 #if !UNITY_WEBGL && !UNITY_ANDROID && !UNITY_IOS
 using System.IO;
@@ -26,9 +24,9 @@ namespace EssentialToolkit.Configuation
                 data = PlayerPrefs.GetString(configKey);
                 if (string.IsNullOrEmpty(data)) return new();
 #else
-                data = File.ReadAllText(fileName);
+                data = File.Exists(fileName) ? File.ReadAllText(fileName) : null;
 #endif
-                return JsonConvert.DeserializeObject<ConfigurationState>(data) ?? new();
+                return data == null ? new() : JsonConvert.DeserializeObject<ConfigurationState>(data);
             }
             catch (Exception ex)
             {

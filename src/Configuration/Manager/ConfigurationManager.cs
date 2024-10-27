@@ -1,6 +1,9 @@
 using EssentialToolkit.Core;
 using System.Collections;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace EssentialToolkit.Configuation
@@ -36,5 +39,27 @@ namespace EssentialToolkit.Configuation
         {
             apply?.onClick.RemoveListener(OnApply);
         }
+
+        #region Utils
+
+        void BindDropdown(TMP_Dropdown dropdown, List<TMP_Dropdown.OptionData> options, UnityAction<int> onChange, bool defaultInteractable = true) {
+            if (dropdown == null) return;
+
+            dropdown.onValueChanged.RemoveListener(onChange);
+            dropdown.interactable = false;
+            dropdown.ClearOptions();
+
+            dropdown.options = options;
+
+            dropdown.onValueChanged.AddListener(onChange);
+            dropdown.interactable = defaultInteractable;
+        }
+
+        T ConfigStateMutator<T>(T[] values, int index, T fallback = default) {
+            if (index >= values.Length) return fallback;
+            return values[index];
+        }
+
+        #endregion
     }
 }

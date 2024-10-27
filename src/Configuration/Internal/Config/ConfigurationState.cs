@@ -4,12 +4,20 @@ namespace EssentialToolkit.Configuation
 {
     internal class ConfigurationState
     {
+        #region Default values
+
+        public static readonly Resolution DEFAULT_RESOLUTION = null;
+        public static readonly FullScreenMode DEFAULT_SCREENMODE = FullScreenMode.FullScreenWindow;
+        public static readonly int DEFAULT_MAX_FPS = -1;
+
+        #endregion
+
         #region Props
 
         // Screen
-        public Vector2 resolution;
-        public FullScreenMode mode = FullScreenMode.FullScreenWindow;
-        public int maxFps;
+        public Resolution resolution = DEFAULT_RESOLUTION;
+        public FullScreenMode screenMode = DEFAULT_SCREENMODE;
+        public int maxFps = DEFAULT_MAX_FPS;
 
         #endregion
 
@@ -18,10 +26,13 @@ namespace EssentialToolkit.Configuation
             Debug.Log("[CONFIG]: start apply");
 #endif
 
-            // Screen
+            // Screen configs
             Application.targetFrameRate = maxFps;
-            Screen.SetResolution((int)resolution.x, (int)resolution.y, Screen.fullScreen);
-            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+            Screen.SetResolution(resolution != null ? resolution.width : Screen.currentResolution.width, resolution != null ? resolution.height : Screen.currentResolution.height, Screen.fullScreen);
+            Screen.fullScreenMode = screenMode;
+
+            // Save
+            ConfigurationService.WriteConfiguration(this);
         }
     }
 }

@@ -8,12 +8,14 @@ namespace EssentialToolkit.Configuation
     // Screen related utils
     internal partial class ConfigurationService
     {
+        static readonly FullScreenMode[] FULLSCREEN_MODES = new FullScreenMode[] { FullScreenMode.ExclusiveFullScreen, FullScreenMode.FullScreenWindow, FullScreenMode.Windowed, FullScreenMode.MaximizedWindow };
+
         /* Return available resolutions.
-         * Optionally, filter by aspect ratio (example: GetAvailableScreenResolutions(16f / 9f)) */
-        public static Resolution[] GetAvailableScreenResolutions(float[] aspectRatios = null)
+        * Optionally, filter by aspect ratio (example: GetAvailableScreenResolutions(16f / 9f)) */
+        public static UnityEngine.Resolution[] GetAvailableScreenResolutions(float[] aspectRatios = null)
         {
             // Use a HashSet to store unique resolutions
-            HashSet<Resolution> uniqueResolutions = new(new ResolutionComparer());
+            HashSet<UnityEngine.Resolution> uniqueResolutions = new(new ResolutionComparer());
 
             if (aspectRatios != null && aspectRatios.Length > 0)
             {
@@ -33,12 +35,13 @@ namespace EssentialToolkit.Configuation
             // Return the unique resolutions as an array
             return uniqueResolutions.ToArray();
         }
-        public static Resolution[] GetAvailableScreenResolutions(Vector2[] aspectRatios)
+        public static UnityEngine.Resolution[] GetAvailableScreenResolutions(Vector2[] aspectRatios)
         {
             // Convert Vector2 aspect ratios to float array
             return GetAvailableScreenResolutions(aspectRatios.Select(v => v.x / v.y).ToArray());
         }
-
+        public static UnityEngine.Resolution[] GetAvailableScreenResolutions() => GetAvailableScreenResolutions(ConfigurationInitializer.Instance.allowedAspectRatios);
+        public static FullScreenMode[] GetAvailableScreenModes() => FULLSCREEN_MODES;
         public static ManagedDisplay[] GetAvailableDisplays() => (from display in Display.displays select new ManagedDisplay(display)).ToArray();
 
         public static bool SupportsMultipleDisplays() => Display.displays.Length > 1;
@@ -55,9 +58,9 @@ namespace EssentialToolkit.Configuation
         }
     }
 
-    internal class ResolutionComparer : IEqualityComparer<Resolution>
+    internal class ResolutionComparer : IEqualityComparer<UnityEngine.Resolution>
     {
-        public bool Equals(Resolution x, Resolution y) => x.width == y.width && x.height == y.height;
-        public int GetHashCode(Resolution obj) => obj.width.GetHashCode() ^ obj.height.GetHashCode();
+        public bool Equals(UnityEngine.Resolution x, UnityEngine.Resolution y) => x.width == y.width && x.height == y.height;
+        public int GetHashCode(UnityEngine.Resolution obj) => obj.width.GetHashCode() ^ obj.height.GetHashCode();
     }
 }

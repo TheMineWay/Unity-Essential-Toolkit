@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine.UI;
 using EssentialToolkit.Core;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace EssentialToolkit.Configuation
 {
@@ -14,17 +15,15 @@ namespace EssentialToolkit.Configuation
         TMP_Dropdown resolutionPicker;
         private void InitResolutionPicker()
         {
-            if (resolutionPicker)
-            {
-                resolutionPicker.interactable = false;
-#if !(UNITY_WEBGL)
-                resolutionPicker.ClearOptions();
-                // TODO: move options logic to a service/util
-                resolutionPicker.AddOptions((from res in ConfigurationService.GetAvailableScreenResolutions(ConfigurationInitializer.Instance.allowedAspectRatios) select new TMP_Dropdown.OptionData($"{res.width} x {res.height}")).ToList());
+#if !UNITY_WEBGL
+            List<TMP_Dropdown.OptionData> options = GetResolutionPickerDropdownOptions();
+            var interactable = true;
+#else
+            List<TMP_Dropdown.OptionData> options = new();
+            var interactable = false;
+#endif
 
-                resolutionPicker.interactable = true;
-# endif
-            }
+            BindDropdown(resolutionPicker, options, OnResolutionSelected, interactable);
         }
 
         [SerializeField]
@@ -32,19 +31,15 @@ namespace EssentialToolkit.Configuation
         TMP_Dropdown displayPicker;
         private void InitDisplayPicker()
         {
-            if (displayPicker)
-            {
-                displayPicker.interactable = false;
+#if !UNITY_WEBGL
+            List<TMP_Dropdown.OptionData> options = GetDisplayPickerDropdownOptions();
+            var interactable = true;
+#else
+            List<TMP_Dropdown.OptionData> options = new();
+            var interactable = false;
+#endif
 
-                if (ConfigurationService.SupportsMultipleDisplays())
-                {
-                    displayPicker.ClearOptions();
-                    // TODO: move options logic to a service/util
-                    displayPicker.AddOptions((from d in ConfigurationService.GetAvailableDisplays() select new TMP_Dropdown.OptionData(d.GetName())).ToList());
-
-                    displayPicker.interactable = true;
-                }
-            }
+            BindDropdown(displayPicker, options, OnDisplaySelected, interactable);
         }
 
         [SerializeField]
@@ -66,13 +61,15 @@ namespace EssentialToolkit.Configuation
         TMP_Dropdown screenMode; // Fullscreen, bordered fullscreen, window
         private void InitScreenMode()
         {
-            if (screenMode)
-            {
-                screenMode.interactable = false;
 #if !UNITY_WEBGL
-                screenMode.interactable = true;
-# endif
-            }
+            List<TMP_Dropdown.OptionData> options = GetScreenModeDropdownOptions();
+            var interactable = true;
+#else
+            List<TMP_Dropdown.OptionData> options = new();
+            var interactable = false;
+#endif
+
+            BindDropdown(screenMode, options, OnScreenModeSelected, interactable);
         }
 
         #endregion
@@ -85,6 +82,26 @@ namespace EssentialToolkit.Configuation
             InitMaxFps();
             InitScreenMode();
         }
+
+        #endregion
+
+        #region Options generator 
+
+        List<TMP_Dropdown.OptionData> GetResolutionPickerDropdownOptions() => (from res in ConfigurationService.GetAvailableScreenResolutions() select new TMP_Dropdown.OptionData($"{res.width} x {res.height}")).ToList();
+        List<TMP_Dropdown.OptionData> GetDisplayPickerDropdownOptions() => (from d in ConfigurationService.GetAvailableDisplays() select new TMP_Dropdown.OptionData(d.GetName())).ToList();
+        List<TMP_Dropdown.OptionData> GetScreenModeDropdownOptions() => (from mode in ConfigurationService.GetAvailableScreenModes() select new TMP_Dropdown.OptionData($"{mode} mode")).ToList();
+
+        #endregion
+
+        #region Events
+
+        void OnResolutionSelected(int index)
+        {
+            var mappedResolutions = (from resolution in ConfigurationService.GetAvailableScreenResolutions() select new Resolution(resolution.width, resolution.height)).ToArray();
+            state.resolution = ConfigStateMutator(mappedResolutions, index, ConfigurationState.DEFAULT_RESOLUTION);
+        }
+        void OnDisplaySelected(int index) {}
+        void OnScreenModeSelected(int index) => state.screenMode = ConfigStateMutator(ConfigurationService.GetAvailableScreenModes(), index, ConfigurationState.DEFAULT_SCREENMODE);
 
         #endregion
     }

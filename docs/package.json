@@ -27,7 +27,7 @@
     "test:report": "npx playwright show-report"
   },
   "dependencies": {
-    "@docusaurus/core": "^3.5.2",
+    "@docusaurus/core": "^3.6.3",
     "@docusaurus/preset-classic": "^3.6.1",
     "@mdx-js/react": "^3.1.0",
     "clsx": "^2.0.0",

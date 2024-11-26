@@ -37,7 +37,7 @@
     "react-dom": "^18.0.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^3.5.2",
+    "@docusaurus/module-type-aliases": "^3.6.3",
     "@docusaurus/tsconfig": "^3.6.1",
     "@docusaurus/types": "^3.6.1",
     "@playwright/test": "^1.48.2",

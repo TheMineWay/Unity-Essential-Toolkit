@@ -13,8 +13,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Change directory to /docs
-        run: cd docs
 
       - name: 💚 Set up Node.js
       - uses: actions/setup-node@v4

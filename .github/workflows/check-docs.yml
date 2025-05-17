@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: 💚 Set up Node.js
-      - uses: actions/setup-node@v4
+        uses: actions/setup-node@v4
         with:
           node-version: "22.x"
 
@@ -34,7 +34,7 @@ jobs:
       # If the build fails, the workflow will stop here
       - name: ⏫ Upload artifacts on failure (Optional)
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-logs
           path: docs/.docusaurus

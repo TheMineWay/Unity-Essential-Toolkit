@@ -19,7 +19,7 @@ jobs:
       - name: 💚 Set up Node.js
       - uses: actions/setup-node@v4
         with:
-          node-version: lts/*
+          node-version: "22.x"
 
       # Install dependencies
       - name: 📦 Install dependencies
